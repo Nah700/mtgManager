@@ -5,24 +5,27 @@
 ** main
 */
 
-#include <SFML/Graphics.hpp>
+#include "mtgManager.hpp"
+#include "Core.hpp"
+
+std::string openFileExplorer()
+{
+    char filename[1024];
+    std::string command = "zenity --file-selection > /tmp/selected_file.txt";
+
+    system(command.c_str());
+    FILE *file = fopen("/tmp/selected_file.txt", "r");
+    if (file) {
+        fgets(filename, sizeof(filename), file);
+        fclose(file);
+        filename[strcspn(filename, "\n")] = 0;
+        return std::string(filename);
+    }
+    return "";
+}
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "CMake SFML Project" };
-    window.setFramerateLimit(144);
-
-    while (window.isOpen())
-    {
-        for (auto event = sf::Event{}; window.pollEvent(event);)
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
-
-        window.clear();
-        window.display();
-    }
+    std::unique_ptr<Core> core = std::make_unique<Core>();
+    core->run();
 }
