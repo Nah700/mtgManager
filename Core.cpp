@@ -11,6 +11,7 @@ Core::Core()
 {
     this->_graphicPart = std::make_unique<Graphical>();
     this->_deckPath = "";
+    this->_scene = 0;
 }
 
 void Core::initDeck()
@@ -26,7 +27,7 @@ void Core::initDeck()
         std::cout << "Unable to open file: " << this->_deckPath << '\n';
     }
     this->_deckPath = "";
-    for (int i = 0; i < this->_cards.size(); i++) {
+    for (long unsigned int i = 0; i < this->_cards.size(); i++) {
         std::cout << this->_cards[i]->getName() << std::endl;
     }
     return;
@@ -41,10 +42,46 @@ void Core::run()
             if (event.type == sf::Event::Closed)
                 this->_graphicPart->getWindow()->close();
         }
-        if (this->_deckPath != "")
-            this->initDeck();
-        this->_graphicPart->manageButtonCallback(this->_deckPath);
+
+        this->_sceneFunctions[this->_scene]();
+        this->_graphicPart->manageButtonCallback(this->_scene, this->_deckPath);
         this->_graphicPart->displayWindowContent();
     }
 }
 
+void Core::scene0()
+{
+    if (this->_deckPath != "") {
+        this->initDeck();
+        this->_scene++;
+        this->_graphicPart->addButton(1800.0f, 10.0f, 100.0f, 100.0f, "None", [this]() { return parameter(); }, "Parameter", sf::Color(255, 255, 255));
+    }
+}
+
+void Core::scene1()
+{
+    return;
+}
+
+void Core::scene2()
+{
+    return;
+}
+
+std::string Core::parameter()
+{
+    this->_graphicPart->changeBackgroundTexture("GraphicUtils/Assets/Textures/parameter_background.png");
+    this->_graphicPart->getButtons().clear();
+    this->_scene = 2;
+    this->_graphicPart->addButton(10.0f, 10.0f, 100.0f, 100.0f, "None", [this]() { return quitParam(); }, "return", sf::Color(255, 255, 255));
+    return "";
+}
+
+std::string Core::quitParam()
+{
+    this->_graphicPart->changeBackgroundTexture("GraphicUtils/Assets/Textures/background.png");
+    this->_graphicPart->getButtons().clear();
+    this->_scene = 1;
+    this->_graphicPart->addButton(1800.0f, 10.0f, 100.0f, 100.0f, "None", [this]() { return parameter(); }, "Parameter", sf::Color(255, 255, 255));
+    return "";
+}
