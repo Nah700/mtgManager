@@ -17,16 +17,25 @@ class Graphical {
 
         sf::RenderWindow *getWindow();
         std::vector<std::unique_ptr<Button>> &getButtons();
-        void displayWindowContent();
+        void displayWindowContent(int scene);
         void manageButtonCallback(int scene, std::string &deckPath);
-        void addButton(float x, float y, float width, float height, std::string text, std::function<std::string()> callback, std::string buttonText, sf::Color color);
+        void addButton(float x, float y, float width, float height, int scene, std::string text, std::function<std::string()> callback, std::string buttonText, sf::Color color);
         void changeBackgroundTexture(std::string texturePath);
+        sf::Text &getSearchBarText() { return this->_searchBarText; }
+        sf::RectangleShape &getSearchBar() { return this->_searchBar; }
+        std::string toggleInfo();
+        std::unique_ptr<Button> &getButtonByText(std::string text);
     private:
         sf::RenderWindow *_window;
         std::vector<std::unique_ptr<sf::RectangleShape>> _rectangles;
         std::vector<std::unique_ptr<Button>> _buttons;
         sf::RectangleShape _background;
+        sf::RectangleShape _searchBar;
+        sf::Text _searchBarText;
+        sf::Font _font;
         std::unique_ptr<sf::Texture> _backgroundTexture;
+        sf::RectangleShape _infoView;
+        bool _infoViewIsOpen = true;
 };
 
 #endif /* !GRAPHICAL_HPP_ */

@@ -24,6 +24,7 @@ class Core {
         void scene2();
         std::string parameter();
         std::string quitParam();
+        void manageSearchBar(sf::Event event);
 
     protected:
     private:
@@ -31,6 +32,8 @@ class Core {
         std::vector<std::unique_ptr<ACard>> _cards;
         std::unique_ptr<Graphical> _graphicPart;
         int _scene;
+        bool isFocused = false;
+        bool isWriting = false;
         std::function<void()> _sceneFunctions[3] = {[this](){ scene0(); }, [this](){ scene1(); }, [this](){ scene2(); }};
 };
 

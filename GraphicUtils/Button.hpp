@@ -13,7 +13,7 @@
 class Button {
     public:
         template <typename Func>
-        Button(float x, float y, float width, float height, std::string texturePath, Func &&func, std::string text = "None", sf::Color textColor = {255, 255, 255})
+        Button(float x, float y, float width, float height, int scene, std::string texturePath, Func &&func, std::string text = "None", sf::Color textColor = {255, 255, 255})
         {
             this->_button.setSize(sf::Vector2f(width, height));
             this->_button.setPosition(x, y);
@@ -39,19 +39,23 @@ class Button {
                 this->_button.getPosition().y + (this->_button.getSize().y - this->_buttonText.getGlobalBounds().height) / 2 - 5
             );
             this->_buttonFunction = std::forward<Func>(func);
+            this->_scene = scene;
         }
         ~Button() = default;
 
         std::string executeCallback();
-        sf::RectangleShape getButton();
-        sf::Text getButtonText();
+        sf::RectangleShape &getButton();
+        sf::Text &getButtonText();
         void setButtonColor(sf::Color color);
+        void changeButtonText(std::string text);
+        int getScene() { return this->_scene; }
     private:
         sf::RectangleShape _button;
         sf::Text _buttonText;
         sf::Font _font;
         sf::Texture _buttonTexture;
         std::function<std::string()> _buttonFunction;
+        int _scene;
 
 };
 
