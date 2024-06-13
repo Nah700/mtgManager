@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(B_OOP_400)
 INCLUDE(FindPkgConfig)
+
 add_compile_options(-Wall -Wextra -g -std=c++20)
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/../")
 set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/../lib/")

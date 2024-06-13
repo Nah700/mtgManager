@@ -19,6 +19,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <curl/curl.h>
+#include <sstream>
+#include <curl/curl.h>
 //#include <jsoncpp/json/json.h>
 #include <json/json.h>
 
@@ -38,7 +40,8 @@ enum CardType {
     ENCHANTMENT,
     ARTIFACT,
     PLANESWALKER,
-    LAND
+    LAND,
+    BATTLE
 };
 
 std::string openFileExplorer();

@@ -27,3 +27,10 @@ CardType ACard::getCardType()
     return this->_cardType;
 }
 
+void ACard::setManaCost(const std::unordered_map<ManaType, int>& manaCost) {
+    this->_manaCost = manaCost;
+}
+
+void ACard::setCardType(CardType cardType) {
+    this->_cardType = cardType;
+}

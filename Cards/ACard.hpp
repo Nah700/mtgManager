@@ -18,6 +18,11 @@ class ACard : public ICard {
         std::string getName();
         std::unordered_map<ManaType, int> getManaCost();
         CardType getCardType();
+
+        void setManaCost(const std::unordered_map<ManaType, int>& manaCost);
+        void setCardType(CardType cardType);
+        //void setCardText(std::string text);
+
     private:
         std::string _name;
         std::unordered_map<ManaType, int> _manaCost;
