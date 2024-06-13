@@ -7,6 +7,34 @@
 
 #include "Core.hpp"
 
+//stocker la réponse
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp)
+{
+    userp->append((char *)contents, size * nmemb);
+    return size * nmemb;
+}
+
+// faire la requête GET à l'API
+std::string makeRequest(const std::string &url) {
+    CURL *curl;
+    CURLcode res;
+    std::string readBuffer;
+
+    curl = curl_easy_init();
+    if(curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+
+        if(res != CURLE_OK)
+            std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+    }
+
+    return readBuffer;
+}
+
 Core::Core()
 {
     this->_graphicPart = std::make_unique<Graphical>();
@@ -21,6 +49,38 @@ void Core::initDeck()
         std::string line;
         while (std::getline(file, line)) {
             this->_cards.push_back(std::make_unique<ACard>(line));
+
+            std::stringstream urlStream;
+            urlStream << "https://api.scryfall.com/cards/named?exact=" << line;
+
+            std::string response = makeRequest(urlStream.str());
+
+            Json::CharReaderBuilder reader;
+            Json::Value jsonResponse;
+            std::string errs;
+
+            std::istringstream s(response);
+            bool parsingSuccessful = Json::parseFromStream(reader, s, &jsonResponse, &errs);
+            if (!parsingSuccessful) {
+                std::cerr << "Failed to parse JSON: " << errs << std::endl;
+                continue;
+            }
+
+            if (!jsonResponse.isNull()) {
+                std::string cardName = jsonResponse["name"].asString();
+                std::cout << "Card name: " << cardName << std::endl;
+
+                std::string cardType = jsonResponse["type_line"].asString();
+                std::cout << "Card type: " << cardType << std::endl;
+
+                std::string cardManaCost = jsonResponse["mana_cost"].asString();
+                std::cout << "Mana cost: " << cardManaCost << std::endl;
+
+                // Uncomment these if needed
+                // this->_cards.back()->setName(cardName);
+                // this->_cards.back()->setCardType(cardType);
+                // this->_cards.back()->setManaCost(cardManaCost);
+            }
         }
         file.close();
     } else {
@@ -33,19 +93,37 @@ void Core::initDeck()
     return;
 }
 
+void Core::updateSearchSuggestions() {
+    std::string searchText = this->_graphicPart->getSearchBarText().getString().toAnsiString();
+    std::vector<std::string> suggestions;
+
+    for (const auto& card : this->_cards) {
+        if (card->getName().substr(0, searchText.size()) == searchText) {
+            suggestions.push_back(card->getName());
+        }
+    }
+
+    this->_graphicPart->updateDropdownMenu(suggestions);
+}
+
 void Core::manageSearchBar(sf::Event event)
 {
     if (event.type == sf::Event::MouseButtonPressed) {
+        std::string clickedItem = this->_graphicPart->suggestClicked(event.mouseButton.x, event.mouseButton.y);
         if (this->_graphicPart->getSearchBar().getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
             this->isFocused = true;
             if (!isWriting) {
                 this->_graphicPart->getSearchBarText().setString("");
                 isWriting = true;
             }
+        } else if (!clickedItem.empty()) {
+                this->_graphicPart->getSearchBarText().setString(clickedItem);
+                this->_graphicPart->updateDropdownMenu({});
         } else {
             this->isFocused = false;
             if (isWriting) {
                 this->_graphicPart->getSearchBarText().setString("Search");
+                this->_graphicPart->updateDropdownMenu({});
                 isWriting = false;
             }
         }
@@ -53,6 +131,9 @@ void Core::manageSearchBar(sf::Event event)
     if (this->isFocused && event.type == sf::Event::TextEntered) {
         if (event.text.unicode == '\r') {
             std::cout << this->_graphicPart->getSearchBarText().getString().toAnsiString() << std::endl;
+            this->_graphicPart->getSearchBarText().setString("Search");
+            this->_graphicPart->updateDropdownMenu({});
+            isWriting = false;
         }
         else if (event.text.unicode == '\b') {
             std::string currentText = this->_graphicPart->getSearchBarText().getString().toAnsiString();
@@ -62,8 +143,10 @@ void Core::manageSearchBar(sf::Event event)
             }
         }
         else {
-            if (static_cast<char>(event.text.unicode) >= 32 && static_cast<char>(event.text.unicode) <= 126)
+            if (static_cast<char>(event.text.unicode) >= 32 && static_cast<char>(event.text.unicode) <= 126) {
                 this->_graphicPart->getSearchBarText().setString(this->_graphicPart->getSearchBarText().getString() + static_cast<char>(event.text.unicode));
+                this->updateSearchSuggestions();
+            }
         }
     }
 }

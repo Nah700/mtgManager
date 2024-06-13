@@ -25,6 +25,7 @@ class Core {
         std::string parameter();
         std::string quitParam();
         void manageSearchBar(sf::Event event);
+        void updateSearchSuggestions();
 
     protected:
     private:

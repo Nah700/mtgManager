@@ -9,5 +9,5 @@ add_executable(mtgManager main.cpp Core.cpp Graphical.cpp Cards/ACard.cpp Graphi
 
 find_package(SFML 2.5 COMPONENTS graphics window system audio REQUIRED)
 
-target_link_libraries(mtgManager sfml-graphics sfml-window sfml-system sfml-audio)
+target_link_libraries(mtgManager sfml-graphics sfml-window sfml-system sfml-audio jsoncpp curl)
 

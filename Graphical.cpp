@@ -95,6 +95,10 @@ void Graphical::displayWindowContent(int scene)
         this->_window->draw(this->_infoView);
         this->_window->draw(this->_searchBar);
         this->_window->draw(this->_searchBarText);
+        for (long unsigned int i = 0; i < this->_dropdownMenu.size(); i++) {
+            this->_dropdownMenu[i]->setPosition(1360, 60 + i * 20);
+            this->_window->draw(*this->_dropdownMenu[i]);
+        }
     }
     this->_window->display();
 }
@@ -120,6 +124,13 @@ void Graphical::manageButtonCallback(int scene, std::string &deckPath)
             button->setButtonColor(sf::Color(10, 10, 255));
         }
     }
+    for (auto &text : this->_dropdownMenu) {
+        if (text->getGlobalBounds().contains(sf::Mouse::getPosition(*this->_window).x, sf::Mouse::getPosition(*this->_window).y)) {
+            text->setFillColor(sf::Color(255, 0, 0));
+        } else {
+            text->setFillColor(sf::Color(255, 255, 255));
+        }
+    }
 }
 
 void Graphical::changeBackgroundTexture(std::string texturePath)
@@ -136,4 +147,23 @@ std::unique_ptr<Button> &Graphical::getButtonByText(std::string text)
             return button;
     }
     throw std::invalid_argument("Button not found");
+}
+
+void Graphical::updateDropdownMenu(const std::vector<std::string>& suggestions)
+{
+    this->_dropdownMenu.clear();
+
+    for (int i = 0; i < std::min(5, (int)suggestions.size()); i++) {
+        this->_dropdownMenu.push_back(std::make_unique<sf::Text> (suggestions[i], this->_font, 18));
+    }
+}
+
+std::string Graphical::suggestClicked(int x, int y)
+{
+    for (long unsigned int i = 0; i < this->_dropdownMenu.size(); i++) {
+        if (this->_dropdownMenu[i]->getGlobalBounds().contains(x, y)) {
+            return this->_dropdownMenu[i]->getString().toAnsiString();
+        }
+    }
+    return "";
 }

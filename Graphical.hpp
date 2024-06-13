@@ -25,6 +25,8 @@ class Graphical {
         sf::RectangleShape &getSearchBar() { return this->_searchBar; }
         std::string toggleInfo();
         std::unique_ptr<Button> &getButtonByText(std::string text);
+        void updateDropdownMenu(const std::vector<std::string>& suggestions);
+        std::string suggestClicked(int x, int y);
     private:
         sf::RenderWindow *_window;
         std::vector<std::unique_ptr<sf::RectangleShape>> _rectangles;
@@ -36,6 +38,7 @@ class Graphical {
         std::unique_ptr<sf::Texture> _backgroundTexture;
         sf::RectangleShape _infoView;
         bool _infoViewIsOpen = true;
+        std::vector<std::unique_ptr<sf::Text>> _dropdownMenu;
 };
 
 #endif /* !GRAPHICAL_HPP_ */

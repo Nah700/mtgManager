@@ -18,6 +18,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <fstream>
+#include <curl/curl.h>
+#include <jsoncpp/json/json.h>
 
 enum ManaType {
     WHITE,
