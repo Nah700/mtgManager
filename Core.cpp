@@ -6,7 +6,6 @@
 */
 
 #include "Core.hpp"
-#include <json/json.h>
 
 // Stocker la réponse
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp)
@@ -50,45 +49,49 @@ void Core::initDeck()
         std::string line;
         while (std::getline(file, line)) {
             this->_cards.push_back(std::make_unique<ACard>(line));
+            
+            std::stringstream urlStream;
+            urlStream << "https://api.magicthegathering.io/v1/cards?name=" << curl_easy_escape(curl_easy_init(), line.c_str(), line.size());
+
+            std::string response = makeRequest(urlStream.str());
+
+            Json::CharReaderBuilder reader;
+            Json::Value jsonResponse;
+            std::string errs;
+
+            std::istringstream s(response);
+            bool parsingSuccessful = Json::parseFromStream(reader, s, &jsonResponse, &errs);
+            if (!parsingSuccessful) {
+                std::cerr << "Failed to parse JSON: " << errs << std::endl;
+                continue;
+            }
+
             bool cardFound = false;
-            int currentPage = 1;
+            if (!jsonResponse["cards"].isNull()) {
+                for (const auto &card : jsonResponse["cards"]) {
+                    if (card["name"].asString() == line) {
+                        cardFound = true;
+                        std::string cardName = card["name"].asString();
+                        std::cout << "Card name: " << cardName << std::endl;
 
-            while (!cardFound) {
-                std::stringstream urlStream;
-                urlStream << "https://api.magicthegathering.io/v1/cards?page=" << currentPage << "&pageSize=100";
+                        std::string cardType = card["type"].asString();
+                        std::cout << "Card type: " << cardType << std::endl;
 
-                std::string response = makeRequest(urlStream.str());
+                        std::string cardCost = card["manaCost"].asString();
+                        std::cout << "Card Cost: " << cardCost << std::endl;
 
-                Json::CharReaderBuilder reader;
-                Json::Value jsonResponse;
-                std::string errs;
+                        std::string cardText = card["text"].asString();
+                        std::cout << "Card text: " << cardText << std::endl;
 
-                std::istringstream s(response);
-                bool parsingSuccessful = Json::parseFromStream(reader, s, &jsonResponse, &errs);
-                if (!parsingSuccessful) {
-                    std::cerr << "Failed to parse JSON: " << errs << std::endl;
-                    break;
-                }
+                        std::string cardUrlImage = card["imageUrl"].asString();
+                        std::cout << "Card Image: " << cardUrlImage << std::endl;
 
-                if (!jsonResponse["cards"].isNull()) {
-                    for (const auto &card : jsonResponse["cards"]) {
-                        if (card["name"].asString() == line) {
-                            cardFound = true;
-                            std::string cardName = card["name"].asString();
-                            std::cout << "Card name: " << cardName << std::endl;
-
-                            std::string cardType = card["type"].asString();
-                            std::cout << "Card type: " << cardType << std::endl;
-
-                            // Uncomment these if needed
-                            // this->_cards.back()->setName(cardName);
-                            // this->_cards.back()->setCardType(cardType);
-                            break;
-                        }
+                        // Uncomment these if needed
+                        // this->_cards.back()->setName(cardName);
+                        // this->_cards.back()->setCardType(cardType);
+                        break;
                     }
                 }
-
-                currentPage++;
             }
 
             if (!cardFound) {
