@@ -15,7 +15,7 @@ class ICard {
         virtual ~ICard() = default;
         virtual std::string getName() = 0;
         virtual std::unordered_map<ManaType, int> getManaCost() = 0;
-        virtual CardType getCardType() = 0;
+        virtual std::vector<CardType> getCardType() = 0;
     private:
 };
 

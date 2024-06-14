@@ -68,23 +68,22 @@ void Core::initDeck()
                     if (card["name"].asString() == line) {
                         cardFound = true;
                         std::string cardName = card["name"].asString();
-                        std::cout << "Card name: " << cardName << std::endl;
+                        //std::cout << "Card name: " << cardName << std::endl;
 
                         std::string cardType = card["type"].asString();
-                        std::cout << "Card type: " << cardType << std::endl;
+                        //std::cout << "Card type = " << cardType << std::endl;
 
                         std::string cardCost = card["manaCost"].asString();
-                        std::cout << "Card Cost: " << cardCost << std::endl;
+                        //std::cout << "Card Cost: " << cardCost << std::endl;
 
                         std::string cardText = card["text"].asString();
-                        std::cout << "Card text: " << cardText << std::endl;
+                        //std::cout << "Card text: " << cardText << std::endl;
 
                         std::string cardUrlImage = card["imageUrl"].asString();
-                        std::cout << "Card Image: " << cardUrlImage << std::endl;
+                        //std::cout << "Card Image: " << cardUrlImage << std::endl;
 
-                        // Uncomment these if needed
-                        // this->_cards.back()->setName(cardName);
-                        // this->_cards.back()->setCardType(cardType);
+                        this->_cards.push_back(std::make_unique<ACard>(cardName, cardCost, cardType, cardText, cardUrlImage));
+
                         break;
                     }
                 }
@@ -99,9 +98,9 @@ void Core::initDeck()
         std::cout << "Unable to open file: " << this->_deckPath << '\n';
     }
     this->_deckPath = "";
-    for (long unsigned int i = 0; i < this->_cards.size(); i++) {
-        std::cout << this->_cards[i]->getName() << std::endl;
-    }
+    //for (long unsigned int i = 0; i < this->_cards.size(); i++) {
+    //    std::cout << "card set = "<< this->_cards[i]->getName() << std::endl;
+    //}
     return;
 }
 
@@ -182,7 +181,8 @@ void Core::run()
 void Core::initCards()
 {
     for (long unsigned int i = 0; i < this->_cards.size(); i++) {
-        // this->_graphicPart->addCard(this->_cards[i]->getName(), this->_cards[i]->getTexturePath());
+        //std::cout << "i =" << i << std::endl;
+        this->_graphicPart->addCard(this->_cards[i]->getName(), this->_cards[i]->getTexturePath());
     }
 }
 

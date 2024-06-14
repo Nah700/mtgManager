@@ -91,6 +91,7 @@ sf::Texture *loadTextureFromUrl(const std::string &url, std::string filename)
 
 void Graphical::addCard(std::string name, std::string texturePath)
 {
+    //std::cout << "name : " << name << "   link : " << texturePath << std::endl;
     std::unique_ptr<sf::RectangleShape> rectangle = std::make_unique<sf::RectangleShape>();
     rectangle->setTexture(loadTextureFromUrl(texturePath, name + ".png"));
     rectangle->setSize(sf::Vector2f(200, 300));

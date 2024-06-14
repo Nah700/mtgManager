@@ -22,8 +22,9 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <curl/curl.h>
-#include <jsoncpp/json/json.h>
-// #include <json/json.h>
+#include <regex>
+//#include <jsoncpp/json/json.h>
+#include <json/json.h>
 
 enum ManaType {
     WHITE,
@@ -31,7 +32,8 @@ enum ManaType {
     BLACK,
     RED,
     GREEN,
-    COLORLESS
+    COLORLESS,
+    GENERIC
 };
 
 enum CardType {
