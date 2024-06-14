@@ -18,6 +18,7 @@ class ACard : public ICard {
         std::string getName();
         std::unordered_map<ManaType, int> getManaCost();
         CardType getCardType();
+        std::string getTexturePath();
 
         void setManaCost(const std::unordered_map<ManaType, int>& manaCost);
         void setCardType(CardType cardType);
@@ -27,6 +28,7 @@ class ACard : public ICard {
         std::string _name;
         std::unordered_map<ManaType, int> _manaCost;
         CardType _cardType;
+        std::string _texturePath;
 };
 
 #endif /* !ACARD_HPP_ */

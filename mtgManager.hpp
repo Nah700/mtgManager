@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <unistd.h>
 #include <vector>
 #include <memory>
 #include <string>
@@ -21,8 +22,8 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <curl/curl.h>
-//#include <jsoncpp/json/json.h>
-#include <json/json.h>
+#include <jsoncpp/json/json.h>
+// #include <json/json.h>
 
 enum ManaType {
     WHITE,
@@ -45,5 +46,6 @@ enum CardType {
 };
 
 std::string openFileExplorer();
+sf::Texture loadTextureFromUrl(const std::string &url);
 
 #endif /* !MTGMANAGER_HPP_ */

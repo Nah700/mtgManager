@@ -53,6 +53,58 @@ std::vector<std::unique_ptr<Button>> &Graphical::getButtons()
     return this->_buttons;
 }
 
+size_t writeData(void* ptr, size_t size, size_t nmemb, FILE* stream) {
+    size_t written = fwrite(ptr, size, nmemb, stream);
+    return written;
+}
+
+sf::Texture *loadTextureFromUrl(const std::string &url, std::string filename)
+{
+    CURL *curl;
+    FILE *fp;
+    std::unique_ptr<sf::Texture> texture = std::make_unique<sf::Texture>();
+    std::string filepath = "GraphicUtils/Assets/Cards/" + filename;
+
+    if(access(filepath.c_str(), F_OK) != -1) {
+        if (!texture->loadFromFile(filepath)) {
+            std::cerr << "Error loading texture" << std::endl;
+        }
+    } else {
+        curl = curl_easy_init();
+        if (curl) {
+            fp = fopen(filepath.c_str(), "wb");
+            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeData);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+            curl_easy_perform(curl);
+            curl_easy_cleanup(curl);
+            fclose(fp);
+        }
+
+        if (!texture->loadFromFile(filepath)) {
+            std::cerr << "Error loading texture" << std::endl;
+        }
+    }
+
+    return texture.release();
+}
+
+void Graphical::addCard(std::string name, std::string texturePath)
+{
+    std::unique_ptr<sf::RectangleShape> rectangle = std::make_unique<sf::RectangleShape>();
+    rectangle->setTexture(loadTextureFromUrl(texturePath, name + ".png"));
+    rectangle->setSize(sf::Vector2f(200, 300));
+    rectangle->setPosition(100, 100);
+    this->_rectangles.push_back(std::make_tuple(std::move(rectangle), false, name));
+}
+
+void Graphical::createDeck(std::vector<std::unique_ptr<ACard>> cartes)
+{
+    for (auto &card : cartes) {
+        this->addCard(card->getName(), card->getTexturePath());
+    }
+}
+
 std::string Graphical::toggleInfo()
 {
     if (this->_infoViewIsOpen) {
@@ -99,8 +151,26 @@ void Graphical::displayWindowContent(int scene)
             this->_dropdownMenu[i]->setPosition(1360, 60 + i * 20);
             this->_window->draw(*this->_dropdownMenu[i]);
         }
+        for (auto &card : this->_rectangles) {
+            if (std::get<1>(card))
+                this->_window->draw(*std::get<0>(card));
+        }
     }
     this->_window->display();
+}
+
+void Graphical::setVisibleCard(std::string cardName, bool visible)
+{
+    for (auto &card : this->_rectangles) {
+        if (visible && std::get<2>(card) == cardName) {
+            std::get<1>(card) = true;
+            break;
+        }
+        if (!visible && std::get<2>(card) == cardName) {
+            std::get<1>(card) = false;
+            break;
+        }
+    }
 }
 
 void Graphical::manageButtonCallback(int scene, std::string &deckPath)

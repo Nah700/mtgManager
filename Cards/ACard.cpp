@@ -10,6 +10,7 @@
 ACard::ACard(std::string name)
 {
     this->_name = name;
+    this->_texturePath = "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=489681&type=card";
 }
 
 std::string ACard::getName()
@@ -33,4 +34,9 @@ void ACard::setManaCost(const std::unordered_map<ManaType, int>& manaCost) {
 
 void ACard::setCardType(CardType cardType) {
     this->_cardType = cardType;
+}
+
+std::string ACard::getTexturePath()
+{
+    return this->_texturePath;
 }

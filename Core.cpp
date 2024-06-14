@@ -7,14 +7,12 @@
 
 #include "Core.hpp"
 
-// Stocker la réponse
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp)
 {
     userp->append((char *)contents, size * nmemb);
     return size * nmemb;
 }
 
-// Faire la requête GET à l'API
 std::string makeRequest(const std::string &url) {
     CURL *curl;
     CURLcode res;
@@ -48,8 +46,6 @@ void Core::initDeck()
     if (file.is_open()) {
         std::string line;
         while (std::getline(file, line)) {
-            this->_cards.push_back(std::make_unique<ACard>(line));
-            
             std::stringstream urlStream;
             urlStream << "https://api.magicthegathering.io/v1/cards?name=" << curl_easy_escape(curl_easy_init(), line.c_str(), line.size());
 
@@ -183,10 +179,18 @@ void Core::run()
     }
 }
 
+void Core::initCards()
+{
+    for (long unsigned int i = 0; i < this->_cards.size(); i++) {
+        // this->_graphicPart->addCard(this->_cards[i]->getName(), this->_cards[i]->getTexturePath());
+    }
+}
+
 void Core::scene0()
 {
     if (this->_deckPath != "") {
         this->initDeck();
+        this->initCards();
         this->_scene++;
         this->_graphicPart->addButton(1800.0f, 10.0f, 100.0f, 100.0f, 1, "None", [this]() { return parameter(); }, "Parameter", sf::Color(255, 255, 255));
         this->_graphicPart->addButton(1280.0f, 100.0f, 20.0f, 100.0f, 1, "None", [this]() { return this->_graphicPart->toggleInfo(); }, ">", sf::Color(255, 255, 255));

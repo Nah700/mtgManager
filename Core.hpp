@@ -18,6 +18,7 @@ class Core {
         ~Core() = default;
 
         void initDeck();
+        void initCards();
         void run();
         void scene0();
         void scene1();
