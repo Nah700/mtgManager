@@ -18,7 +18,7 @@ class Graphical {
 
         sf::RenderWindow *getWindow();
         std::vector<std::unique_ptr<Button>> &getButtons();
-        void displayWindowContent(int scene);
+        void displayWindowContent(int scene, std::string &deckPath);
         void manageButtonCallback(int scene, std::string &deckPath);
         void addButton(float x, float y, float width, float height, int scene, std::string text, std::function<std::string()> callback, std::string buttonText, sf::Color color);
         void addCard(std::string name, std::string texturePath);
@@ -31,6 +31,10 @@ class Graphical {
         std::string suggestClicked(int x, int y);
         void setVisibleCard(std::string cardName, bool visible);
         void createDeck(std::vector<std::unique_ptr<ACard>> cartes);
+        void infoCardTexture(ACard *card);
+        void initInfoItems();
+        void displayLoadingBar(float progress);
+        void initLoading();
     private:
         sf::RenderWindow *_window;
         std::vector<std::tuple<std::unique_ptr<sf::RectangleShape>, bool, std::string>> _rectangles;
@@ -41,8 +45,12 @@ class Graphical {
         sf::Font _font;
         std::unique_ptr<sf::Texture> _backgroundTexture;
         sf::RectangleShape _infoView;
+        sf::RectangleShape _cardInfoView;
         bool _infoViewIsOpen = true;
         std::vector<std::unique_ptr<sf::Text>> _dropdownMenu;
+        sf::RectangleShape _loadingBar;
+        sf::RectangleShape _loadingBarProgress;
+        sf::Text _loadingBarText;
 };
 
 #endif /* !GRAPHICAL_HPP_ */

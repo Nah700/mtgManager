@@ -27,6 +27,7 @@ class Core {
         std::string quitParam();
         void manageSearchBar(sf::Event event);
         void updateSearchSuggestions();
+        ACard *getCardByName(std::string name);
 
     protected:
     private:

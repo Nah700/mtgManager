@@ -23,8 +23,9 @@
 #include <sstream>
 #include <curl/curl.h>
 #include <regex>
-//#include <jsoncpp/json/json.h>
-#include <json/json.h>
+#include <thread>
+#include <jsoncpp/json/json.h>
+// #include <json/json.h>
 
 enum ManaType {
     WHITE,
@@ -48,6 +49,7 @@ enum CardType {
 };
 
 std::string openFileExplorer();
-sf::Texture loadTextureFromUrl(const std::string &url);
+sf::Texture *loadTextureFromUrl(const std::string &url, std::string filename);
+void checkUrl(std::string &url);
 
 #endif /* !MTGMANAGER_HPP_ */

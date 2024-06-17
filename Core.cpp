@@ -13,13 +13,14 @@ static size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::stri
     return size * nmemb;
 }
 
-std::string makeRequest(const std::string &url) {
+std::string makeRequest(const std::string &url)
+{
     CURL *curl;
     CURLcode res;
     std::string readBuffer;
 
     curl = curl_easy_init();
-    if(curl) {
+    if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
@@ -42,66 +43,70 @@ Core::Core()
 
 void Core::initDeck()
 {
-    std::ifstream file(this->_deckPath);
-    if (file.is_open()) {
-        std::string line;
-        while (std::getline(file, line)) {
-            std::stringstream urlStream;
-            urlStream << "https://api.magicthegathering.io/v1/cards?name=" << curl_easy_escape(curl_easy_init(), line.c_str(), line.size());
-
-            std::string response = makeRequest(urlStream.str());
-
-            Json::CharReaderBuilder reader;
-            Json::Value jsonResponse;
-            std::string errs;
-
-            std::istringstream s(response);
-            bool parsingSuccessful = Json::parseFromStream(reader, s, &jsonResponse, &errs);
-            if (!parsingSuccessful) {
-                std::cerr << "Failed to parse JSON: " << errs << std::endl;
-                continue;
+    bool finished = false;
+    std::thread deckLoadingThread([&finished, this]() {
+        std::ifstream file(this->_deckPath);
+        if (file.is_open()) {
+            std::string line;
+            std::vector<std::string> lines;
+            while (std::getline(file, line)) {
+                lines.push_back(line);
             }
+            file.close();
 
-            bool cardFound = false;
-            if (!jsonResponse["cards"].isNull()) {
-                for (const auto &card : jsonResponse["cards"]) {
-                    if (card["name"].asString() == line) {
-                        cardFound = true;
-                        std::string cardName = card["name"].asString();
-                        //std::cout << "Card name: " << cardName << std::endl;
+            for (size_t i = 0; i < lines.size(); ++i) {
+                line = lines[i];
+                std::stringstream urlStream;
+                urlStream << "https://api.magicthegathering.io/v1/cards?name=" << curl_easy_escape(curl_easy_init(), line.c_str(), line.size());
 
-                        std::string cardType = card["type"].asString();
-                        //std::cout << "Card type = " << cardType << std::endl;
+                std::string response = makeRequest(urlStream.str());
 
-                        std::string cardCost = card["manaCost"].asString();
-                        //std::cout << "Card Cost: " << cardCost << std::endl;
+                Json::CharReaderBuilder reader;
+                Json::Value jsonResponse;
+                std::string errs;
 
-                        std::string cardText = card["text"].asString();
-                        //std::cout << "Card text: " << cardText << std::endl;
+                std::istringstream s(response);
+                bool parsingSuccessful = Json::parseFromStream(reader, s, &jsonResponse, &errs);
+                if (!parsingSuccessful) {
+                    std::cerr << "Failed to parse JSON: " << errs << std::endl;
+                    continue;
+                }
 
-                        std::string cardUrlImage = card["imageUrl"].asString();
-                        //std::cout << "Card Image: " << cardUrlImage << std::endl;
-
-                        this->_cards.push_back(std::make_unique<ACard>(cardName, cardCost, cardType, cardText, cardUrlImage));
-
-                        break;
+                bool cardFound = false;
+                if (!jsonResponse["cards"].isNull()) {
+                    for (const auto &card : jsonResponse["cards"]) {
+                        if (card["name"].asString() == line) {
+                            cardFound = true;
+                            std::string cardName = card["name"].asString();
+                            std::string cardType = card["type"].asString();
+                            std::string cardCost = card["manaCost"].asString();
+                            std::string cardText = card["text"].asString();
+                            std::string cardUrlImage = card["imageUrl"].asString();
+                            checkUrl(cardUrlImage);
+                            this->_cards.push_back(std::make_unique<ACard>(cardName, cardCost, cardType, cardText, cardUrlImage));
+                            break;
+                        }
                     }
                 }
+                if (!cardFound) {
+                    std::cerr << "Card not found: " << line << std::endl;
+                }
+                this->_graphicPart->displayLoadingBar((float)i / lines.size());
             }
-
-            if (!cardFound) {
-                std::cerr << "Card not found: " << line << std::endl;
-            }
+        } else {
+            std::cout << "Unable to open file: " << this->_deckPath << '\n';
         }
-        file.close();
-    } else {
-        std::cout << "Unable to open file: " << this->_deckPath << '\n';
+        finished = true;
+    });
+    while (deckLoadingThread.joinable()) {
+        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        if (finished) {
+            break;
+        }
     }
-    this->_deckPath = "";
-    //for (long unsigned int i = 0; i < this->_cards.size(); i++) {
-    //    std::cout << "card set = "<< this->_cards[i]->getName() << std::endl;
-    //}
-    return;
+
+    deckLoadingThread.join();
 }
 
 void Core::updateSearchSuggestions() {
@@ -115,6 +120,16 @@ void Core::updateSearchSuggestions() {
     }
 
     this->_graphicPart->updateDropdownMenu(suggestions);
+}
+
+ACard *Core::getCardByName(std::string name)
+{
+    for (long unsigned int i = 0; i < this->_cards.size(); i++) {
+        if (this->_cards[i]->getName() == name) {
+            return this->_cards[i].get();
+        }
+    }
+    return nullptr;
 }
 
 void Core::manageSearchBar(sf::Event event)
@@ -142,6 +157,7 @@ void Core::manageSearchBar(sf::Event event)
     if (this->isFocused && event.type == sf::Event::TextEntered) {
         if (event.text.unicode == '\r') {
             std::cout << this->_graphicPart->getSearchBarText().getString().toAnsiString() << std::endl;
+            this->_graphicPart->infoCardTexture(this->getCardByName(this->_graphicPart->getSearchBarText().getString().toAnsiString()));
             this->_graphicPart->getSearchBarText().setString("Search");
             this->_graphicPart->updateDropdownMenu({});
             isWriting = false;
@@ -174,16 +190,29 @@ void Core::run()
         }
         this->_sceneFunctions[this->_scene]();
         this->_graphicPart->manageButtonCallback(this->_scene, this->_deckPath);
-        this->_graphicPart->displayWindowContent(this->_scene);
+        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath);
     }
 }
 
 void Core::initCards()
 {
-    for (long unsigned int i = 0; i < this->_cards.size(); i++) {
-        //std::cout << "i =" << i << std::endl;
-        this->_graphicPart->addCard(this->_cards[i]->getName(), this->_cards[i]->getTexturePath());
+    bool finished = false;
+    std::thread cardsLoadingThread([&finished, this]() {
+        for (long unsigned int i = 0; i < this->_cards.size(); i++) {
+            this->_graphicPart->addCard(this->_cards[i]->getName(), this->_cards[i]->getTexturePath());
+            this->_graphicPart->displayLoadingBar((float)i / this->_cards.size());
+        }
+        this->_deckPath = "";
+        finished = true;
+    });
+    while (cardsLoadingThread.joinable()) {
+        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        if (finished) {
+            break;
+        }
     }
+    cardsLoadingThread.join();
 }
 
 void Core::scene0()
@@ -193,7 +222,6 @@ void Core::scene0()
         this->initCards();
         this->_scene++;
         this->_graphicPart->addButton(1800.0f, 10.0f, 100.0f, 100.0f, 1, "None", [this]() { return parameter(); }, "Parameter", sf::Color(255, 255, 255));
-        this->_graphicPart->addButton(1280.0f, 100.0f, 20.0f, 100.0f, 1, "None", [this]() { return this->_graphicPart->toggleInfo(); }, ">", sf::Color(255, 255, 255));
     }
 }
 
