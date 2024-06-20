@@ -41,6 +41,27 @@ Core::Core()
     this->_scene = 0;
 }
 
+bool findImageUrl(const Json::Value &json, std::string &imageUrl) {
+    if (json.isObject()) {
+        if (json.isMember("imageUrl")) {
+            imageUrl = json["imageUrl"].asString();
+            return true;
+        }
+        for (const auto &key : json.getMemberNames()) {
+            if (findImageUrl(json[key], imageUrl)) {
+                return true;
+            }
+        }
+    } else if (json.isArray()) {
+        for (const auto &element : json) {
+            if (findImageUrl(element, imageUrl)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void Core::initDeck()
 {
     bool finished = false;
@@ -81,7 +102,13 @@ void Core::initDeck()
                             std::string cardType = card["type"].asString();
                             std::string cardCost = card["manaCost"].asString();
                             std::string cardText = card["text"].asString();
-                            std::string cardUrlImage = card["imageUrl"].asString();
+                            std::string cardUrlImage;
+
+                            if (!findImageUrl(card, cardUrlImage)) {
+                                std::cerr << "imageUrl not found for card: " << cardName << std::endl;
+                                continue;
+                            }
+
                             checkUrl(cardUrlImage);
                             this->_cards.push_back(std::make_unique<ACard>(cardName, cardCost, cardType, cardText, cardUrlImage));
                             break;
