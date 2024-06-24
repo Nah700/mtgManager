@@ -185,6 +185,7 @@ void Core::manageSearchBar(sf::Event event)
         if (event.text.unicode == '\r') {
             std::cout << this->_graphicPart->getSearchBarText().getString().toAnsiString() << std::endl;
             this->_graphicPart->infoCardTexture(this->getCardByName(this->_graphicPart->getSearchBarText().getString().toAnsiString()));
+            this->_graphicPart->addCardToBoard(this->_graphicPart->getSearchBarText().getString().toAnsiString());
             this->_graphicPart->getSearchBarText().setString("Search");
             this->_graphicPart->updateDropdownMenu({});
             isWriting = false;
@@ -214,6 +215,7 @@ void Core::run()
             if (event.type == sf::Event::Closed)
                 this->_graphicPart->getWindow()->close();
             this->manageSearchBar(event);
+            this->_graphicPart->dragDropCard(event);
         }
         this->_sceneFunctions[this->_scene]();
         this->_graphicPart->manageButtonCallback(this->_scene, this->_deckPath);

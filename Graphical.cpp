@@ -51,6 +51,7 @@ Graphical::Graphical()
     this->_window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MTGMANAGER");
     this->addButton(850.0f, 450.0f, 200.0f, 100.0f, 0, "None", openFileExplorer, "Select deck", sf::Color(255, 255, 255));
     this->addButton(1280.0f, 100.0f, 20.0f, 100.0f, 1, "None", [this]() { return this->toggleInfo(); }, ">", sf::Color(255, 255, 255));
+    this->addButton(1478.0f, 700.0f, 265.0f, 50.0f, 1, "None", [this]() { return this->addCardToBoard(std::string("None")); }, "Add to battlefield", sf::Color(255, 255, 255));
     this->_backgroundTexture = std::make_unique<sf::Texture>();
     if (!this->_backgroundTexture->loadFromFile("GraphicUtils/Assets/Textures/background.png"))
         std::cerr << "Failed to load background texture" << std::endl;
@@ -139,12 +140,6 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath)
 {
     this->_window->clear();
     this->_window->draw(this->_background);
-    for (auto &button : this->_buttons) {
-        if (scene == button->getScene()) {
-            this->_window->draw(button->getButton());
-            this->_window->draw(button->getButtonText());
-        }
-    }
     if (scene == 0 && deckPath != "") {
         this->_window->draw(this->_loadingBar);
         this->_window->draw(this->_loadingBarProgress);
@@ -162,6 +157,16 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath)
         for (auto &card : this->_rectangles) {
             if (std::get<1>(card))
                 this->_window->draw(*std::get<0>(card));
+        }
+    }
+    for (auto &button : this->_buttons) {
+        if (scene == button->getScene()) {
+            if (button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen)
+                continue;
+            if (button->getButtonText().getString() == "Add to battlefield" && !this->_infoViewIsOpen)
+                continue;
+            this->_window->draw(button->getButton());
+            this->_window->draw(button->getButtonText());
         }
     }
     this->_window->display();
@@ -185,7 +190,7 @@ void Graphical::manageButtonCallback(int scene, std::string &deckPath)
 {
     for (auto &button : this->_buttons) {
         if (button->getButton().getGlobalBounds().contains(sf::Mouse::getPosition(*this->_window).x, sf::Mouse::getPosition(*this->_window).y)) {
-            if (button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen)
+            if ((button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen) || (button->getButtonText().getString() == "Add to battlefield" && !this->_infoViewIsOpen))
                 continue;
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 button->setButtonColor(sf::Color(10, 255, 10));
@@ -241,14 +246,45 @@ std::string Graphical::suggestClicked(int x, int y)
 
 void Graphical::displayLoadingBar(float progress)
 {
-    // Ensure progress is between 0 and 1
     progress = std::max(0.0f, std::min(1.0f, progress));
 
-    // Update the size of the loading bar progress
     sf::Vector2f size = this->_loadingBar.getSize();
     this->_loadingBarProgress.setSize(sf::Vector2f(size.x * progress, size.y));
 
-    // Update the loading bar text
     int percentage = static_cast<int>(progress * 100);
     this->_loadingBarText.setString("Loading... " + std::to_string(percentage) + "%");
+}
+
+std::string Graphical::addCardToBoard(std::string cardName)
+{
+    if (cardName != "None") {
+        this->_activeCard = cardName;
+        return "";
+    }
+    if (cardName == "None") {
+        for (auto &card : this->_rectangles) {
+            if (std::get<2>(card) == this->_activeCard) {
+                this->setVisibleCard(this->_activeCard, true);
+                break;
+            }
+        }
+    }
+    this->_dragDrop = true;
+    return "";
+}
+
+void Graphical::dragDropCard(sf::Event event)
+{
+    if (this->_dragDrop) {
+        if (event.type == sf::Event::MouseButtonPressed) {
+            this->_dragDrop = false;
+        } else if (event.type == sf::Event::MouseMoved) {
+            for (auto &card : this->_rectangles) {
+                if (std::get<1>(card) && std::get<2>(card) == this->_activeCard) {
+                    std::get<0>(card)->setPosition(float(event.mouseMove.x), float(event.mouseMove.y));
+                    break;
+                }
+            }
+        }
+    }
 }

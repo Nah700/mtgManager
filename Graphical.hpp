@@ -35,6 +35,8 @@ class Graphical {
         void initInfoItems();
         void displayLoadingBar(float progress);
         void initLoading();
+        std::string addCardToBoard(std::string cardName);
+        void dragDropCard(sf::Event event);
     private:
         sf::RenderWindow *_window;
         std::vector<std::tuple<std::unique_ptr<sf::RectangleShape>, bool, std::string>> _rectangles;
@@ -51,6 +53,8 @@ class Graphical {
         sf::RectangleShape _loadingBar;
         sf::RectangleShape _loadingBarProgress;
         sf::Text _loadingBarText;
+        std::string _activeCard = "";
+        bool _dragDrop = false;
 };
 
 #endif /* !GRAPHICAL_HPP_ */
