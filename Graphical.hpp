@@ -37,6 +37,9 @@ class Graphical {
         void initLoading();
         std::string addCardToBoard(std::string cardName);
         void dragDropCard(sf::Event event);
+        void clickCardOnBoard(sf::Event event);
+        void moveCardToBack(std::string cardName);
+
     private:
         sf::RenderWindow *_window;
         std::vector<std::tuple<std::unique_ptr<sf::RectangleShape>, bool, std::string>> _rectangles;
@@ -55,6 +58,11 @@ class Graphical {
         sf::Text _loadingBarText;
         std::string _activeCard = "";
         bool _dragDrop = false;
+        bool _cardEnlarged = false;
+        sf::Vector2f _originalCardPosition;
+        sf::Vector2f _originalCardSize;
+        sf::RectangleShape _checkbox1, _checkbox2;
+        bool _checkbox1Checked = false, _checkbox2Checked = false;
 };
 
 #endif /* !GRAPHICAL_HPP_ */

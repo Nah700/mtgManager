@@ -25,6 +25,17 @@ void Graphical::initInfoItems()
     this->_infoView.setSize(sf::Vector2f(620, 1080));
     this->_cardInfoView.setPosition(1478, 300);
     this->_cardInfoView.setSize(sf::Vector2f(265, 370));
+
+    this->_checkbox1.setSize(sf::Vector2f(20, 20));
+    this->_checkbox1.setFillColor(sf::Color::White);
+    this->_checkbox1.setPosition(900, 850);
+    this->_checkbox1.setOutlineColor(sf::Color::Red);
+    this->_checkbox1.setOutlineThickness(2);
+    this->_checkbox2.setSize(sf::Vector2f(20, 20));
+    this->_checkbox2.setFillColor(sf::Color::White);
+    this->_checkbox2.setPosition(900, 880);
+    this->_checkbox2.setOutlineColor(sf::Color::Green);
+    this->_checkbox2.setOutlineThickness(2);
 }
 
 void Graphical::initLoading()
@@ -158,6 +169,10 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath)
             if (std::get<1>(card))
                 this->_window->draw(*std::get<0>(card));
         }
+        if (this->_cardEnlarged) {
+            this->_window->draw(_checkbox1);
+            this->_window->draw(_checkbox2);
+        }
     }
     for (auto &button : this->_buttons) {
         if (scene == button->getScene()) {
@@ -288,3 +303,89 @@ void Graphical::dragDropCard(sf::Event event)
         }
     }
 }
+
+void Graphical::moveCardToBack(std::string cardName)
+{
+    for (auto card = this->_rectangles.begin(); card != this->_rectangles.end(); card++) {
+        if (std::get<2>(*card) == cardName) {
+            this->_rectangles.push_back(std::move(*card));
+            this->_rectangles.erase(card);
+            break;
+        }
+    }
+}
+
+void Graphical::clickCardOnBoard(sf::Event event)
+{
+    if (event.type == sf::Event::MouseButtonPressed) {
+        bool clickedOnCard = false;
+        for (auto &card : this->_rectangles) {
+            auto &rectangle = std::get<0>(card);
+            if (rectangle->getGlobalBounds().contains(float(event.mouseButton.x), float(event.mouseButton.y))) {
+                clickedOnCard = true;
+                if (_cardEnlarged && std::get<2>(card) != this->_activeCard) {
+                    for (auto &prevCard : this->_rectangles) {
+                        if (std::get<2>(prevCard) == this->_activeCard) {
+                            if (this->_infoViewIsOpen) {
+                                this->toggleInfo();
+                            }
+                            auto &prevRectangle = std::get<0>(prevCard);
+                            prevRectangle->setSize(this->_originalCardSize);
+                            prevRectangle->setPosition(this->_originalCardPosition);
+                            break;
+                        }
+                    }
+                }
+                if (!_cardEnlarged || std::get<2>(card) != this->_activeCard) {
+                    if (this->_infoViewIsOpen) {
+                        this->toggleInfo();
+                    }
+                    this->_originalCardPosition = rectangle->getPosition();
+                    this->_originalCardSize = rectangle->getSize();
+                    rectangle->setSize(sf::Vector2f(400, 600));
+                    rectangle->setPosition(960 - 200, 540 - 300);
+                    this->_cardEnlarged = true;
+                    this->_activeCard = std::get<2>(card);
+                    this->moveCardToBack(this->_activeCard);
+                }
+                break;
+            }
+        }
+        if (!clickedOnCard && _cardEnlarged) {
+            bool updateOutline = false;
+            if (_checkbox1.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                _checkbox1Checked = !_checkbox1Checked;
+                updateOutline = true;
+            } else if (_checkbox2.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                _checkbox2Checked = !_checkbox2Checked;
+                updateOutline = true;
+            }
+            if (updateOutline) {
+                sf::Color borderColor = sf::Color::Transparent;
+                if (_checkbox1Checked) borderColor = sf::Color::Red;
+                if (_checkbox2Checked) borderColor = sf::Color::Green;
+
+                for (auto &card : _rectangles) {
+                    if (std::get<2>(card) == _activeCard) {
+                        auto &rectangle = std::get<0>(card);
+                        rectangle->setOutlineColor(borderColor);
+                        rectangle->setOutlineThickness(5);
+                        return;
+                    }
+                }
+            } else {
+                for (auto &card : this->_rectangles) {
+                    if (std::get<2>(card) == this->_activeCard) {
+                        auto &rectangle = std::get<0>(card);
+                        rectangle->setSize(this->_originalCardSize);
+                        rectangle->setPosition(this->_originalCardPosition);
+                        this->_cardEnlarged = false;
+                        this->_activeCard = "";
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+

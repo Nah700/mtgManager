@@ -216,6 +216,7 @@ void Core::run()
                 this->_graphicPart->getWindow()->close();
             this->manageSearchBar(event);
             this->_graphicPart->dragDropCard(event);
+            this->_graphicPart->clickCardOnBoard(event);
         }
         this->_sceneFunctions[this->_scene]();
         this->_graphicPart->manageButtonCallback(this->_scene, this->_deckPath);
