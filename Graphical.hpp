@@ -76,7 +76,7 @@ class Graphical {
         //new
         sf::RectangleShape _helpMenu;
         sf::Text _helpMenuText;
-        std::vector<std::pair<std::string, std::string>> _rules;
+        std::vector<std::pair<sf::Text, sf::Text>> _rules;
         bool _showRuleDetails; 
         sf::Text _selectedRuleText;
         int _selectedRuleIndex;

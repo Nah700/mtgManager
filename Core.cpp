@@ -258,7 +258,7 @@ void Core::scene0()
         this->initCards();
         this->_scene++;
         this->_graphicPart->addButton(1800.0f, 10.0f, 100.0f, 100.0f, 1, "None", [this]() { return parameter(); }, "Parameter", sf::Color(255, 255, 255));
-        this->_graphicPart->addButton(1500.0f, 10.0f, 100.0f, 100.0f, 1, "None2", [this]() { return help_menu(); }, "Help", sf::Color(255, 255, 255));
+        this->_graphicPart->addButton(1500.0f, 10.0f, 100.0f, 100.0f, 1, "None", [this]() { return help_menu(); }, "Help", sf::Color(255, 255, 255));
     }
 }
 

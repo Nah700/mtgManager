@@ -62,65 +62,6 @@ void Graphical::initLoading()
     this->_loadingBarText.setPosition(810, 425);
 }
 
-void Graphical::initRules() {
-    this->_helpMenu.setSize(sf::Vector2f(500, 1080));
-    this->_helpMenu.setPosition(sf::Vector2f((1920 / 2), 0));
-    this->_helpMenu.setFillColor(sf::Color(220, 220, 220, 255));
-
-    this->_helpMenuText.setFont(this->_font);
-    this->_helpMenuText.setCharacterSize(20);
-    this->_helpMenuText.setFillColor(sf::Color::Black);
-    this->_helpMenuText.setPosition(sf::Vector2f((1920 / 2) + 10, 10));
-
-    std::ifstream rulesFile("keyWord.txt");
-    if (rulesFile.is_open()) {
-        std::string line;
-        std::string ruleNumber;
-        std::string ruleName;
-        std::stringstream ruleContent;
-
-        while (std::getline(rulesFile, line)) {
-            if (line.find(".") != std::string::npos) {
-                if (!ruleNumber.empty() && !ruleName.empty()) {
-                    _rules.push_back(std::make_pair(ruleNumber + " " + ruleName, ruleContent.str()));
-                    _ruleTitles.push_back(ruleNumber + " " + ruleName);
-                    ruleContent.str(std::string());
-                    ruleContent.clear();
-                }
-
-                size_t dotPos = line.find(".");
-                ruleNumber = line.substr(0, dotPos);
-                ruleName = line.substr(dotPos + 1);
-            } else {
-                ruleContent << line << "\n";
-            }
-        }
-
-        if (!ruleNumber.empty() && !ruleName.empty()) {
-            _rules.push_back(std::make_pair(ruleNumber + " " + ruleName, ruleContent.str()));
-            _ruleTitles.push_back(ruleNumber + " " + ruleName);
-        }
-
-        rulesFile.close();
-    } else {
-        std::cerr << "Unable to open rules file!" << std::endl;
-    }
-
-    _selectedRuleIndex = -1;
-
-    _ruleDefinitionText.setFont(_font);
-    _ruleDefinitionText.setCharacterSize(20);
-    _ruleDefinitionText.setFillColor(sf::Color::Black);
-    _ruleDefinitionText.setPosition(sf::Vector2f((1920 / 2) + 10, 500));
-}
-
-void Graphical::handleRuleSelection(int selectedIndex) {
-    if (selectedIndex >= 0 && selectedIndex < _rules.size()) {
-        _selectedRuleIndex = selectedIndex;
-        _ruleDefinitionText.setString(_rules[_selectedRuleIndex].second);
-    }
-}
-
 Graphical::Graphical()
 {
     this->_window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MTGMANAGER");
@@ -135,15 +76,56 @@ Graphical::Graphical()
     this->_background.setSize(sf::Vector2f(1920, 1080));
     this->initInfoItems();
     this->initLoading();
-
-    //new
-    this->_selectedRuleIndex = -1;
     this->initRules();
 }
 
 Graphical::~Graphical()
 {
     delete this->_window;
+}
+
+void Graphical::initRules() {
+    this->_helpMenu.setSize(sf::Vector2f(500, 1080));
+    this->_helpMenu.setPosition(sf::Vector2f((1920 / 2), 0));
+    this->_helpMenu.setFillColor(sf::Color(220, 220, 220, 255));
+
+    this->_helpMenuText.setFont(this->_font);
+    this->_helpMenuText.setCharacterSize(20);
+    this->_helpMenuText.setFillColor(sf::Color::Black);
+    this->_helpMenuText.setPosition(sf::Vector2f((1920 / 2) + 10, 10));
+
+    std::ifstream rulesFile("keyWord.txt");
+    if (rulesFile.is_open()) {
+        std::string effect;
+        std::string rules;
+        std::string line;
+
+        while (std::getline(rulesFile, line)) {
+            if (line.find(".!") != std::string::npos) {
+                if (!effect.empty()) {
+                    sf::Text effectText;
+                    effectText.setFont(this->_font);
+                    effectText.setCharacterSize(20);
+                    effectText.setFillColor(sf::Color::Black);
+                    effectText.setString(effect);
+                    sf::Text rulesText;
+                    rulesText.setFont(this->_font);
+                    rulesText.setCharacterSize(20);
+                    rulesText.setFillColor(sf::Color::Black);
+                    rulesText.setString(rules);
+                    this->_rules.push_back(std::make_pair(effectText, rulesText));
+                    effect.clear();
+                    rules.clear();
+                }
+                effect = line;
+            } else {
+                rules = rules + "\n" + line;
+            }
+        }
+        rulesFile.close();
+    } else {
+        std::cerr << "Unable to open rules file!" << std::endl;
+    }
 }
 
 void Graphical::addButton(float x, float y, float width, float height, int scene, std::string text, std::function<std::string()> callback, std::string buttonText, sf::Color color)
@@ -220,29 +202,24 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
 {
     this->_window->clear();
     this->_window->draw(this->_background);
-
     if (scene == 0 && deckPath != "") {
         this->_window->draw(this->_loadingBar);
         this->_window->draw(this->_loadingBarProgress);
         this->_window->draw(this->_loadingBarText);
     }
-
     if (scene == 1) {
         this->_window->draw(this->_infoView);
         this->_window->draw(this->_searchBar);
         this->_window->draw(this->_searchBarText);
         this->_window->draw(this->_cardInfoView);
-
-        for (const auto &menuText : this->_dropdownMenu) {
-            this->_window->draw(*menuText);
+        for (long unsigned int i = 0; i < this->_dropdownMenu.size(); i++) {
+            this->_dropdownMenu[i]->setPosition(1360, 60 + i * 20);
+            this->_window->draw(*this->_dropdownMenu[i]);
         }
-
-        for (const auto &card : this->_rectangles) {
-            if (std::get<1>(card)) {
+        for (auto &card : this->_rectangles) {
+            if (std::get<1>(card))
                 this->_window->draw(*std::get<0>(card));
-            }
         }
-
         if (this->_cardEnlarged) {
             this->_window->draw(_checkbox1);
             this->_window->draw(_checkbox2);
@@ -264,57 +241,25 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
             }
         }
     }
-
-    for (const auto &button : this->_buttons) {
+    if (scene == 3) {
+        this->_window->draw(this->_helpMenu);
+        float menuY = 10.0f;
+        for (auto &rule : this->_rules) {
+            rule.first.setPosition(sf::Vector2f((1920 / 2) + 10, menuY));
+            this->_window->draw(rule.first);
+            menuY += 20;
+        }
+    }
+    for (auto &button : this->_buttons) {
         if (scene == button->getScene()) {
-            if (button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen) {
+            if (button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen)
                 continue;
-            }
-            if (button->getButtonText().getString() == "Add to battlefield" && !this->_infoViewIsOpen) {
+            if (button->getButtonText().getString() == "Add to battlefield" && !this->_infoViewIsOpen)
                 continue;
-            }
             this->_window->draw(button->getButton());
             this->_window->draw(button->getButtonText());
         }
     }
-
-    if (scene == 3) {
-        this->_window->draw(this->_helpMenu);
-        float menuY = 10.0f;
-        std::set<std::string> ruleNumbers;
-
-        // Identifier les noms de règles et collecter les définitions
-        std::vector<std::pair<std::string, std::vector<std::string>>> ruleDefinitions;
-
-        for (size_t i = 0; i < _rules.size(); ++i) {
-            std::string fullRule = _rules[i].first;
-            size_t found = fullRule.find_first_of("0123456789");
-            if (found != std::string::npos) {
-                std::string ruleNumber = fullRule.substr(found);
-                ruleNumbers.insert(ruleNumber);
-            }
-        }
-
-        for (const auto& ruleNumber : ruleNumbers) {
-            sf::Text ruleText;
-            ruleText.setFont(this->_font);
-            ruleText.setCharacterSize(20);
-            ruleText.setFillColor(sf::Color::Black);
-            ruleText.setString(ruleNumber);
-            ruleText.setPosition(sf::Vector2f((1920 / 2) + 10, menuY));
-            this->_window->draw(ruleText);
-            menuY += 30.0f;
-        }
-
-        if (_selectedRuleIndex >= 0 && _selectedRuleIndex < _rules.size()) {
-            this->_helpMenuText.setString(_rules[_selectedRuleIndex].first);
-            this->_selectedRuleText.setString(_rules[_selectedRuleIndex].second);
-            this->_selectedRuleText.setPosition(sf::Vector2f((1920 / 2) + 10, menuY));
-            this->_window->draw(this->_helpMenuText);
-            this->_window->draw(this->_selectedRuleText);
-        }
-    }
-
     this->_window->display();
 }
 
@@ -356,21 +301,6 @@ void Graphical::manageButtonCallback(int scene, std::string &deckPath)
             text->setFillColor(sf::Color(255, 0, 0));
         else
             text->setFillColor(sf::Color(255, 255, 255));
-    }
-
-    if (scene == 3) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            sf::Vector2i mouse = sf::Mouse::getPosition(*this->_window);
-            if (mouse.x >= (1920 / 2) && mouse.x <= ((1920 / 2) + 500) && mouse.y >= 0 && mouse.y <= 1080) {
-                int index = (mouse.y - 10) / 30;
-
-                if (index >= 0 && index < _rules.size()) {
-                    _selectedRuleIndex = index;
-                } else {
-                    _selectedRuleIndex = -1;
-                }
-            }
-        }
     }
 }
 
