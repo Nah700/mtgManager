@@ -252,6 +252,7 @@ void Core::scene0()
         this->initCards();
         this->_scene++;
         this->_graphicPart->addButton(1800.0f, 10.0f, 100.0f, 100.0f, 1, "None", [this]() { return parameter(); }, "Parameter", sf::Color(255, 255, 255));
+        this->_graphicPart->addButton(1500.0f, 10.0f, 100.0f, 100.0f, 1, "None2", [this]() { return help_menu(); }, "Help", sf::Color(255, 255, 255));
     }
 }
 
@@ -265,6 +266,11 @@ void Core::scene2()
     return;
 }
 
+void Core::scene3()
+{
+    return;
+}
+
 std::string Core::parameter()
 {
     this->_graphicPart->changeBackgroundTexture("GraphicUtils/Assets/Textures/parameter_background.png");
@@ -274,6 +280,21 @@ std::string Core::parameter()
 }
 
 std::string Core::quitParam()
+{
+    this->_graphicPart->changeBackgroundTexture("GraphicUtils/Assets/Textures/background.png");
+    this->_scene = 1;
+    return "";
+}
+
+std::string Core::help_menu()
+{
+    this->_graphicPart->changeBackgroundTexture("GraphicUtils/Assets/Textures/parameter_background.png");
+    this->_scene = 3;
+    this->_graphicPart->addButton(10.0f, 10.0f, 100.0f, 100.0f, 3, "None", [this]() { return quitHelp(); }, "return", sf::Color(255, 255, 255));
+    return "";
+}
+
+std::string Core::quitHelp()
 {
     this->_graphicPart->changeBackgroundTexture("GraphicUtils/Assets/Textures/background.png");
     this->_scene = 1;

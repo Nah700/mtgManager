@@ -29,6 +29,10 @@ class Core {
         void updateSearchSuggestions();
         ACard *getCardByName(std::string name);
 
+        void scene3();
+        std::string help_menu();
+        std::string quitHelp();
+
     protected:
     private:
         std::string _deckPath;
@@ -37,7 +41,7 @@ class Core {
         int _scene;
         bool isFocused = false;
         bool isWriting = false;
-        std::function<void()> _sceneFunctions[3] = {[this](){ scene0(); }, [this](){ scene1(); }, [this](){ scene2(); }};
+        std::function<void()> _sceneFunctions[4] = {[this](){ scene0(); }, [this](){ scene1(); }, [this](){ scene2(); }, [this](){ scene3(); }};
 };
 
 #endif /* !CORE_HPP_ */

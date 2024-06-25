@@ -10,6 +10,7 @@
 
 #include "GraphicUtils/Button.hpp"
 #include "Cards/ACard.hpp"
+#include <set>
 
 class Graphical {
     public:
@@ -40,6 +41,10 @@ class Graphical {
         void clickCardOnBoard(sf::Event event);
         void moveCardToBack(std::string cardName);
 
+        //new
+        void initRules();
+        void handleRuleSelection(int selectedIndex);
+
     private:
         sf::RenderWindow *_window;
         std::vector<std::tuple<std::unique_ptr<sf::RectangleShape>, bool, std::string>> _rectangles;
@@ -63,6 +68,16 @@ class Graphical {
         sf::Vector2f _originalCardSize;
         sf::RectangleShape _checkbox1, _checkbox2;
         bool _checkbox1Checked = false, _checkbox2Checked = false;
+
+        //new
+        sf::RectangleShape _helpMenu;
+        sf::Text _helpMenuText;
+        std::vector<std::pair<std::string, std::string>> _rules;
+        bool _showRuleDetails; 
+        sf::Text _selectedRuleText;
+        int _selectedRuleIndex;
+        std::vector<std::string> _ruleTitles;
+        sf::Text _ruleDefinitionText;
 };
 
 #endif /* !GRAPHICAL_HPP_ */
