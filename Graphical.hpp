@@ -19,7 +19,7 @@ class Graphical {
 
         sf::RenderWindow *getWindow();
         std::vector<std::unique_ptr<Button>> &getButtons();
-        void displayWindowContent(int scene, std::string &deckPath);
+        void displayWindowContent(int scene, std::string &deckPath, ACard &card);
         void manageButtonCallback(int scene, std::string &deckPath);
         void addButton(float x, float y, float width, float height, int scene, std::string text, std::function<std::string()> callback, std::string buttonText, sf::Color color);
         void addCard(std::string name, std::string texturePath);
@@ -40,6 +40,8 @@ class Graphical {
         void dragDropCard(sf::Event event);
         void clickCardOnBoard(sf::Event event);
         void moveCardToBack(std::string cardName);
+        void enableCardInfos(std::string cardName);
+        std::string getActiveCard() { return this->_activeCard; }
 
         //new
         void initRules();
@@ -55,6 +57,8 @@ class Graphical {
         sf::Font _font;
         std::unique_ptr<sf::Texture> _backgroundTexture;
         sf::RectangleShape _infoView;
+        sf::RectangleShape _infoView2;
+        std::vector<sf::Text> _cardInfos;
         sf::RectangleShape _cardInfoView;
         bool _infoViewIsOpen = true;
         std::vector<std::unique_ptr<sf::Text>> _dropdownMenu;
@@ -78,6 +82,7 @@ class Graphical {
         int _selectedRuleIndex;
         std::vector<std::string> _ruleTitles;
         sf::Text _ruleDefinitionText;
+        std::map<std::string, float> _cardRotations;
 };
 
 #endif /* !GRAPHICAL_HPP_ */

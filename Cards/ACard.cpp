@@ -7,13 +7,21 @@
 
 #include "ACard.hpp"
 
-ACard::ACard(std::string name, std::string manaCost, std::string cardtype, std::string text, std::string url)
+ACard::ACard(std::string name, std::string manaCost, std::string cardtype, std::string text, std::string url, std::pair<int, int> powerToughness)
 {
     this->_name = name;
     this->_manaCost = setManaCost(manaCost);
     this->_cardType = setCardType(cardtype);
     this->_text = text;
     this->_texturePath = url;
+    this->_powerToughness = powerToughness;
+
+    this->_cardTypeString = cardtype;
+}
+
+std::string ACard::getCardText()
+{
+    return this->_text;
 }
 
 std::string ACard::getName()
@@ -29,6 +37,21 @@ std::unordered_map<ManaType, int> ACard::getManaCost()
 std::vector<CardType> ACard::getCardType()
 {
     return this->_cardType;
+}
+
+std::string ACard::getCardTypeStringed()
+{
+    return this->_cardTypeString;
+}
+
+int ACard::getPower()
+{
+    return this->_powerToughness.first;
+}
+
+int ACard::getToughness()
+{
+    return this->_powerToughness.second;
 }
 
 std::unordered_map<ManaType, int> ACard::setManaCost(std::string cost)

@@ -36,6 +36,11 @@ void Graphical::initInfoItems()
     this->_checkbox2.setPosition(900, 880);
     this->_checkbox2.setOutlineColor(sf::Color::Green);
     this->_checkbox2.setOutlineThickness(2);
+
+    this->_infoView2.setOrigin(200, 300);
+    this->_infoView2.setPosition((1920 / 2) + 400, (1080 / 2));
+    this->_infoView2.setSize(sf::Vector2f(400, 600));
+    this->_infoView2.setFillColor(sf::Color(70, 70, 70));
 }
 
 void Graphical::initLoading()
@@ -170,6 +175,7 @@ void Graphical::addCard(std::string name, std::string texturePath)
     rectangle->setTexture(loadTextureFromUrl(texturePath, name + ".png"));
     rectangle->setSize(sf::Vector2f(200, 300));
     rectangle->setPosition(100, 100);
+    rectangle->setOrigin(rectangle->getSize().x / 2, rectangle->getSize().y / 2);
     this->_rectangles.push_back(std::make_tuple(std::move(rectangle), false, name));
 }
 
@@ -210,7 +216,7 @@ std::string Graphical::toggleInfo()
     return "";
 }
 
-void Graphical::displayWindowContent(int scene, std::string &deckPath)
+void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &card)
 {
     this->_window->clear();
     this->_window->draw(this->_background);
@@ -238,8 +244,24 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath)
         }
 
         if (this->_cardEnlarged) {
-            this->_window->draw(this->_checkbox1);
-            this->_window->draw(this->_checkbox2);
+            this->_window->draw(_checkbox1);
+            this->_window->draw(_checkbox2);
+            this->_window->draw(this->_infoView2);
+            if (this->_cardInfos[1].getString().getSize() < 7) {
+                this->_cardInfos[0].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 290));
+                this->_cardInfos[2].setString(this->_cardInfos[2].getString() + " " + card.getCardTypeStringed());
+                this->_cardInfos[2].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 270));
+                this->_cardInfos[3].setString(std::to_string(card.getPower()));
+                this->_cardInfos[3].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 250));
+                this->_cardInfos[4].setPosition(float((1920 / 2) + 230), float((1080 / 2) - 250));
+                this->_cardInfos[5].setString(std::to_string(card.getToughness()));
+                this->_cardInfos[5].setPosition(float((1920 / 2) + 250), float((1080 / 2) - 250));
+                this->_cardInfos[1].setString(this->_cardInfos[1].getString() + card.getCardText());
+                this->_cardInfos[1].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 230));
+            }
+            for (int i = 0; i < this->_cardInfos.size(); i++) {
+                this->_window->draw(this->_cardInfos[i]);
+            }
         }
     }
 
@@ -439,77 +461,107 @@ void Graphical::moveCardToBack(std::string cardName)
     }
 }
 
+void Graphical::enableCardInfos(std::string cardName)
+{
+    for (auto &card : this->_rectangles) {
+        if (std::get<2>(card) == cardName) {
+            this->_cardInfos.clear();
+            this->_cardInfos.push_back(sf::Text("Name: " + cardName, this->_font, 18));
+            this->_cardInfos.push_back(sf::Text("Rules ", this->_font, 18));
+            this->_cardInfos.push_back(sf::Text("Type", this->_font, 18));
+            this->_cardInfos.push_back(sf::Text(".", this->_font, 18));
+            this->_cardInfos.push_back(sf::Text("/", this->_font, 18));
+            this->_cardInfos.push_back(sf::Text(".", this->_font, 18));
+        }
+    }
+}
+
 void Graphical::clickCardOnBoard(sf::Event event)
 {
     if (event.type == sf::Event::MouseButtonPressed) {
-        bool clickedOnCard = false;
-        for (auto &card : this->_rectangles) {
-            auto &rectangle = std::get<0>(card);
-            if (rectangle->getGlobalBounds().contains(float(event.mouseButton.x), float(event.mouseButton.y))) {
-                clickedOnCard = true;
-                if (_cardEnlarged && std::get<2>(card) != this->_activeCard) {
-                    for (auto &prevCard : this->_rectangles) {
-                        if (std::get<2>(prevCard) == this->_activeCard) {
-                            if (this->_infoViewIsOpen) {
-                                this->toggleInfo();
+        if (event.mouseButton.button == sf::Mouse::Right) {
+            for (auto &card : this->_rectangles) {
+                if (std::get<1>(card) && std::get<0>(card)->getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                    std::string cardName = std::get<2>(card);
+                    float &rotation = _cardRotations[cardName];
+                    rotation = (rotation == 90.f) ? 0.f : 90.f;
+                    std::get<0>(card)->setRotation(rotation);
+                    return;
+                }
+            }
+        } else {
+            bool clickedOnCard = false;
+            for (auto &card : this->_rectangles) {
+                auto &rectangle = std::get<0>(card);
+                if (rectangle->getGlobalBounds().contains(float(event.mouseButton.x), float(event.mouseButton.y))) {
+                    clickedOnCard = true;
+                    if (_cardEnlarged && std::get<2>(card) != this->_activeCard) {
+                        for (auto &prevCard : this->_rectangles) {
+                            if (std::get<2>(prevCard) == this->_activeCard) {
+                                if (this->_infoViewIsOpen) {
+                                    this->toggleInfo();
+                                }
+                                auto &prevRectangle = std::get<0>(prevCard);
+                                prevRectangle->setSize(this->_originalCardSize);
+                                prevRectangle->setPosition(this->_originalCardPosition);
+                                break;
                             }
-                            auto &prevRectangle = std::get<0>(prevCard);
-                            prevRectangle->setSize(this->_originalCardSize);
-                            prevRectangle->setPosition(this->_originalCardPosition);
-                            break;
                         }
                     }
-                }
-                if (!_cardEnlarged || std::get<2>(card) != this->_activeCard) {
-                    if (this->_infoViewIsOpen) {
-                        this->toggleInfo();
+                    if (!_cardEnlarged || std::get<2>(card) != this->_activeCard) {
+                        if (this->_infoViewIsOpen) {
+                            this->toggleInfo();
+                        }
+                        this->_originalCardPosition = rectangle->getPosition();
+                        this->_originalCardSize = rectangle->getSize();
+                        rectangle->setSize(sf::Vector2f(400, 600));
+                        rectangle->setOrigin(rectangle->getSize().x / 2, rectangle->getSize().y / 2);
+                        rectangle->setPosition(1920 / 2, 1080 / 2);
+                        this->_cardEnlarged = true;
+                        this->_activeCard = std::get<2>(card);
+                        this->moveCardToBack(this->_activeCard);
+                        this->enableCardInfos(this->_activeCard);
                     }
-                    this->_originalCardPosition = rectangle->getPosition();
-                    this->_originalCardSize = rectangle->getSize();
-                    rectangle->setSize(sf::Vector2f(400, 600));
-                    rectangle->setPosition(960 - 200, 540 - 300);
-                    this->_cardEnlarged = true;
-                    this->_activeCard = std::get<2>(card);
-                    this->moveCardToBack(this->_activeCard);
+                    break;
                 }
-                break;
             }
-        }
-        if (!clickedOnCard && _cardEnlarged) {
-            bool updateOutline = false;
-            if (_checkbox1.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
-                _checkbox1Checked = !_checkbox1Checked;
-                updateOutline = true;
-            } else if (_checkbox2.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
-                _checkbox2Checked = !_checkbox2Checked;
-                updateOutline = true;
-            }
-            if (updateOutline) {
-                sf::Color borderColor = sf::Color::Transparent;
-                if (_checkbox1Checked) borderColor = sf::Color::Red;
-                if (_checkbox2Checked) borderColor = sf::Color::Green;
+            if (!clickedOnCard && _cardEnlarged) {
+                bool updateOutline = false;
+                if (_checkbox1.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                    _checkbox1Checked = !_checkbox1Checked;
+                    updateOutline = true;
+                } else if (_checkbox2.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                    _checkbox2Checked = !_checkbox2Checked;
+                    updateOutline = true;
+                }
+                if (updateOutline) {
+                    sf::Color borderColor = sf::Color::Transparent;
+                    if (_checkbox1Checked) borderColor = sf::Color::Red;
+                    if (_checkbox2Checked) borderColor = sf::Color::Green;
 
-                for (auto &card : _rectangles) {
-                    if (std::get<2>(card) == _activeCard) {
-                        auto &rectangle = std::get<0>(card);
-                        rectangle->setOutlineColor(borderColor);
-                        rectangle->setOutlineThickness(5);
-                        return;
+                    for (auto &card : _rectangles) {
+                        if (std::get<2>(card) == _activeCard) {
+                            auto &rectangle = std::get<0>(card);
+                            rectangle->setOutlineColor(borderColor);
+                            rectangle->setOutlineThickness(5);
+                            return;
+                        }
                     }
-                }
-            } else {
-                for (auto &card : this->_rectangles) {
-                    if (std::get<2>(card) == this->_activeCard) {
-                        auto &rectangle = std::get<0>(card);
-                        rectangle->setSize(this->_originalCardSize);
-                        rectangle->setPosition(this->_originalCardPosition);
-                        this->_cardEnlarged = false;
-                        this->_activeCard = "";
-                        break;
+                } else {
+                    for (auto &card : this->_rectangles) {
+                        if (std::get<2>(card) == this->_activeCard) {
+                            auto &rectangle = std::get<0>(card);
+                            rectangle->setSize(this->_originalCardSize);
+                            rectangle->setOrigin(rectangle->getSize().x / 2, rectangle->getSize().y / 2);
+                            rectangle->setPosition(this->_originalCardPosition);
+                            this->_cardEnlarged = false;
+                            this->_activeCard = "";
+                            this->_cardInfos.clear();
+                            break;
+                        }
                     }
                 }
             }
         }
     }
 }
-

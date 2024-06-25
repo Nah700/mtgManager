@@ -102,6 +102,12 @@ void Core::initDeck()
                             std::string cardType = card["type"].asString();
                             std::string cardCost = card["manaCost"].asString();
                             std::string cardText = card["text"].asString();
+                            std::string cardPower = "0";
+                            std::string cardThougness = "0";
+                            if (cardType.find("Creature") != std::string::npos) {
+                                cardPower = card["power"].asString();
+                                cardThougness = card["toughness"].asString();
+                            }
                             std::string cardUrlImage;
 
                             if (!findImageUrl(card, cardUrlImage)) {
@@ -110,7 +116,7 @@ void Core::initDeck()
                             }
 
                             checkUrl(cardUrlImage);
-                            this->_cards.push_back(std::make_unique<ACard>(cardName, cardCost, cardType, cardText, cardUrlImage));
+                            this->_cards.push_back(std::make_unique<ACard>(cardName, cardCost, cardType, cardText, cardUrlImage, std::make_pair(std::stoi(cardPower), std::stoi(cardThougness))));
                             break;
                         }
                     }
@@ -126,7 +132,7 @@ void Core::initDeck()
         finished = true;
     });
     while (deckLoadingThread.joinable()) {
-        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath);
+        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath, *this->getCardByName(this->_graphicPart->getActiveCard()));
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         if (finished) {
             break;
@@ -220,7 +226,7 @@ void Core::run()
         }
         this->_sceneFunctions[this->_scene]();
         this->_graphicPart->manageButtonCallback(this->_scene, this->_deckPath);
-        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath);
+        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath, *this->getCardByName(this->_graphicPart->getActiveCard()));
     }
 }
 
@@ -236,7 +242,7 @@ void Core::initCards()
         finished = true;
     });
     while (cardsLoadingThread.joinable()) {
-        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath);
+        this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath, *this->getCardByName(this->_graphicPart->getActiveCard()));
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         if (finished) {
             break;
