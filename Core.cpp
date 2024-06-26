@@ -231,6 +231,8 @@ void Core::run()
         }
         this->_sceneFunctions[this->_scene]();
         this->_graphicPart->manageButtonCallback(this->_scene, this->_deckPath);
+        this->_graphicPart->handleScrollEvent(event);
+        this->_graphicPart->handleMouseClickEvent(event);
         this->_graphicPart->displayWindowContent(this->_scene, this->_deckPath, *this->getCardByName(this->_graphicPart->getActiveCard()));
     }
 }

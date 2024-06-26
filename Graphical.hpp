@@ -48,7 +48,8 @@ class Graphical {
 
         //new
         void initRules();
-        void handleRuleSelection(int selectedIndex);
+        void handleScrollEvent(sf::Event event);
+        void handleMouseClickEvent(const sf::Event &event);
 
     private:
         sf::RenderWindow *_window;
@@ -79,17 +80,23 @@ class Graphical {
         bool _isEditingToughnessText = false;
         std::string _powerTextBuffer = "";
         int tokens = 0;
+        std::map<std::string, float> _cardRotations;
 
         //new
         sf::RectangleShape _helpMenu;
         sf::Text _helpMenuText;
         std::vector<std::pair<sf::Text, sf::Text>> _rules;
-        bool _showRuleDetails; 
-        sf::Text _selectedRuleText;
-        int _selectedRuleIndex;
-        std::vector<std::string> _ruleTitles;
-        sf::Text _ruleDefinitionText;
-        std::map<std::string, float> _cardRotations;
+
+        sf::RectangleShape _scrollBar;
+        sf::RectangleShape _scrollBarCursor;
+        sf::View _scrollView;
+        float _scrollAmount;
+
+        sf::Text _current;
+        bool _isScrolling = false;
+        float _initialScrollPosition = 0.0f;
+        float _initialMouseY = 0.0f;
+
 };
 
 #endif /* !GRAPHICAL_HPP_ */

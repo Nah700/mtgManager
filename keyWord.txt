@@ -1,9 +1,13 @@
 702.2.! Deathtouch
     702.2a Deathtouch is a static ability.
-    702.2b A creature with toughness greater than 0 that’s been dealt damage by a source with deathtouch since the last time state-based actions were checked is destroyed as a state-based action. See rule 704.
-    702.2c Any nonzero amount of combat damage assigned to a creature by a source with deathtouch is considered to be lethal damage for the purposes of determining if a proposed combat damage assignment is valid, regardless of that creature’s toughness. See rules 510.1c–d.
+    702.2b A creature with toughness greater than 0 that’s been dealt damage by a source with deathtouch since
+        the last time state-based actions were checked is destroyed as a state-based action. See rule 704.
+    702.2c Any nonzero amount of combat damage assigned to a creature by a source with deathtouch is considered 
+        to be lethal damage for the purposes of determining if a proposed combat damage assignment is valid,
+        regardless of that creature’s toughness. See rules 510.1c–d.
     702.2d The deathtouch rules function no matter what zone an object with deathtouch deals damage from.
-    702.2e If an object changes zones before an effect causes it to deal damage, its last known information is used to determine whether it had deathtouch.
+    702.2e If an object changes zones before an effect causes it to deal damage, 
+        its last known information is used to determine whether it had deathtouch.
     702.2f Multiple instances of deathtouch on the same object are redundant.
 
 702.3.! Defender
@@ -12,24 +16,44 @@
     702.3c Multiple instances of defender on the same creature are redundant.
 
 702.4.! Double Strike
-    702.4a Double strike is a static ability that modifies the rules for the combat damage step. (See rule 510, “Combat Damage Step.”)
-    702.4b If at least one attacking or blocking creature has first strike (see rule 702.7) or double strike as the combat damage step begins, the only creatures that assign combat damage in that step are those with first strike or double strike. After that step, instead of proceeding to the end of combat step, the phase gets a second combat damage step. The only creatures that assign combat damage in that step are the remaining attackers and blockers that had neither first strike nor double strike as the first combat damage step began, as well as the remaining attackers and blockers that currently have double strike. After that step, the phase proceeds to the end of combat step.
-    702.4c Removing double strike from a creature during the first combat damage step will stop it from assigning combat damage in the second combat damage step.
-    702.4d Giving double strike to a creature with first strike after it has already dealt combat damage in the first combat damage step will allow the creature to assign combat damage in the second combat damage step.
+    702.4a Double strike is a static ability that modifies the rules for the combat damage step.
+        (See rule 510, “Combat Damage Step.”)
+    702.4b If at least one attacking or blocking creature has first strike (see rule 702.7)
+        or double strike as the combat damage step begins, the only creatures that assign combat damage
+        in that step are those with first strike or double strike. After that step, 
+        instead of proceeding to the end of combat step, the phase gets a second combat damage step.
+        The only creatures that assign combat damage in that step are the remaining attackers and 
+        blockers that had neither first strike nor double strike as the first combat damage step began,
+        as well as the remaining attackers and blockers that currently have double strike.
+        After that step, the phase proceeds to the end of combat step.
+    702.4c Removing double strike from a creature during the first combat damage step will stop it
+        from assigning combat damage in the second combat damage step.
+    702.4d Giving double strike to a creature with first strike after it has already dealt combat damage 
+        in the first combat damage step will allow the creature to assign combat damage in the second combat damage step.
     702.4e Multiple instances of double strike on the same creature are redundant.
 
 702.5.! Enchant
-    702.5a Enchant is a static ability, written “Enchant [object or player].” The enchant ability restricts what an Aura spell can target and what an Aura can enchant.
+    702.5a Enchant is a static ability, written “Enchant [object or player].
+        ” The enchant ability restricts what an Aura spell can target and what an Aura can enchant.
     702.5b For more information about Auras, see rule 303, “Enchantments.”
-    702.5c If an Aura has multiple instances of enchant, all of them apply. The Aura’s target must follow the restrictions from all the instances of enchant. The Aura can enchant only objects or players that match all of its enchant abilities.
-    702.5d Auras that can enchant a player can target and be attached to players. Such Auras can’t target permanents and can’t be attached to permanents.
+    702.5c If an Aura has multiple instances of enchant, all of them apply. 
+        The Aura’s target must follow the restrictions from all the instances of enchant. 
+        The Aura can enchant only objects or players that match all of its enchant abilities.
+    702.5d Auras that can enchant a player can target and be attached to players. 
+        Such Auras can’t target permanents and can’t be attached to permanents.
 
 702.6.! Equip
-    702.6a Equip is an activated ability of Equipment cards. “Equip [cost]” means “[Cost]: Attach this permanent to target creature you control. Activate only as a sorcery.”
+    702.6a Equip is an activated ability of Equipment cards.
+        “Equip [cost]” means “[Cost]: Attach this permanent to target creature you control. Activate only as a sorcery.”
     702.6b For more information about Equipment, see rule 301, “Artifacts.”
-    702.6c Equip abilities may further restrict what creatures may be chosen as legal targets. Such restrictions usually appear in the form “Equip [quality]” or “Equip [quality] creature.” These equip abilities may legally target only a creature that’s controlled by the player activating the ability and that has the chosen quality. Additional restrictions for an equip ability don’t restrict what the Equipment may be attached to.
+    702.6c Equip abilities may further restrict what creatures may be chosen as legal targets. 
+        Such restrictions usually appear in the form “Equip [quality]” or “Equip [quality] creature.
+        ” These equip abilities may legally target only a creature that’s controlled by the player activating the ability and that has the chosen quality.
+        Additional restrictions for an equip ability don’t restrict what the Equipment may be attached to.
     702.6d If a permanent has multiple equip abilities, any of its equip abilities may be activated.
-    702.6e “Equip planeswalker” is a variant of the equip ability. “Equip planeswalker [cost]” means “[Cost]: Attach this permanent to target planeswalker you control as though that planeswalker were a creature. Activate only as a sorcery.”
+    702.6e “Equip planeswalker” is a variant of the equip ability. 
+        “Equip planeswalker [cost]” means “[Cost]: Attach this permanent to target planeswalker you control as though that planeswalker were a creature. 
+        Activate only as a sorcery.”
 
 702.7.! First Strike
     702.7a First strike is a static ability that modifies the rules for the combat damage step. (See rule 510, “Combat Damage Step.”)
@@ -447,37 +471,37 @@
     702.82b Some objects have abilities that refer to the number of creatures the permanent devoured. “It devoured” means “sacrificed as a result of its devour ability as it entered the battlefield.”
     702.82c Devour [quality] is a variant of devour. “Devour [quality] N” means “As this object enters the battlefield, you may sacrifice any number of [quality] permanents. This permanent enters the battlefield with N +1/+1 counters on it for each permanent sacrificed this way.”
 
-702.83. Exalted
+702.83.! Exalted
     702.83a Exalted is a triggered ability. “Exalted” means “Whenever a creature you control attacks alone, that creature gets +1/+1 until end of turn.”
     702.83b A creature “attacks alone” if it’s the only creature declared as an attacker in a given combat phase. See rule 506.5.
 
-702.84. Unearth
+702.84.! Unearth
     702.84a Unearth is an activated ability that functions while the card with unearth is in a graveyard. “Unearth [cost]” means “[Cost]: Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step. If it would leave the battlefield, exile it instead of putting it anywhere else. Activate only as a sorcery.”
 
-702.85. Cascade
+702.85.! Cascade
     702.85a Cascade is a triggered ability that functions only while the spell with cascade is on the stack. “Cascade” means “When you cast this spell, exile cards from the top of your library until you exile a nonland card whose mana value is less than this spell’s mana value. You may cast that card without paying its mana cost if the resulting spell’s mana value is less than this spell’s mana value. Then put all cards exiled this way that weren’t cast on the bottom of your library in a random order.”
     702.85b If an effect allows a player to take an action with one or more of the exiled cards “as you cascade,” the player may take that action after they have finished exiling cards due to the cascade ability. This action is taken before choosing whether to cast the last exiled card or, if no appropriate card was exiled, before putting the exiled cards on the bottom of their library in a random order.
     702.85c If a spell has multiple instances of cascade, each triggers separately.
 
-702.86. Annihilator
+702.86.! Annihilator
     702.86a Annihilator is a triggered ability. “Annihilator N” means “Whenever this creature attacks, defending player sacrifices N permanents.”
     702.86b If a creature has multiple instances of annihilator, each triggers separately.
 
-702.87. Level Up
+702.87.! Level Up
     702.87a Level up is an activated ability. “Level up [cost]” means “[Cost]: Put a level counter on this permanent. Activate only as a sorcery.”
     702.87b Each card printed with a level up ability is known as a leveler card. It has a nonstandard layout and includes two level symbols that are themselves keyword abilities. See rule 711, “Leveler Cards.”
     702.87c Some enchantments have the subtype Class and associated abilities that give them a class level. These are not the same as level up abilities and class levels do not interact with level counters. See rule 716, “Class Cards.”
 
-702.88. Rebound
+702.88.! Rebound
     702.88a Rebound appears on some instants and sorceries. It represents a static ability that functions while the spell is on the stack and may create a delayed triggered ability. “Rebound” means “If this spell was cast from your hand, instead of putting it into your graveyard as it resolves, exile it and, at the beginning of your next upkeep, you may cast this card from exile without paying its mana cost.”
     702.88b Casting a spell as an effect of its rebound ability follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.88c Multiple instances of rebound on the same spell are redundant.
 
-702.89. Umbra Armor
+702.89.! Umbra Armor
     702.89a Umbra armor is a static ability that appears on some Auras. “Umbra armor” means “If enchanted permanent would be destroyed, instead remove all damage marked on it and destroy this Aura.”
     702.89b Some older cards were printed with the ability “totem armor” or referenced that ability. The text of these cards has been updated in the Oracle card reference to refer to umbra armor instead.
 
-702.90. Infect
+702.90.! Infect
     702.90a Infect is a static ability.
     702.90b Damage dealt to a player by a source with infect doesn’t cause that player to lose life. Rather, it causes that source’s controller to give the player that many poison counters. See rule 120.3.
     702.90c Damage dealt to a creature by a source with infect isn’t marked on that creature. Rather, it causes that source’s controller to put that many -1/-1 counters on that creature. See rule 120.3.
@@ -485,81 +509,79 @@
     702.90e The infect rules function no matter what zone an object with infect deals damage from.
     702.90f Multiple instances of infect on the same object are redundant.
 
-702.91. Battle Cry
+702.91.! Battle Cry
     702.91a Battle cry is a triggered ability. “Battle cry” means “Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.”
     702.91b If a creature has multiple instances of battle cry, each triggers separately.
 
-702.92. Living Weapon
+702.92.! Living Weapon
     702.92a Living weapon is a triggered ability. “Living weapon” means “When this Equipment enters the battlefield, create a 0/0 black Phyrexian Germ creature token, then attach this Equipment to it.”
 
-702.93. Undying
+702.93.! Undying
     702.93a Undying is a triggered ability. “Undying” means “When this permanent is put into a graveyard from the battlefield, if it had no +1/+1 counters on it, return it to the battlefield under its owner’s control with a +1/+1 counter on it.”
 
-702.94. Miracle
+702.94.! Miracle
     702.94a Miracle is a static ability linked to a triggered ability. (See rule 603.11.) “Miracle [cost]” means “You may reveal this card from your hand as you draw it if it’s the first card you’ve drawn this turn. When you reveal this card this way, you may cast it by paying [cost] rather than its mana cost.”
     702.94b If a player chooses to reveal a card using its miracle ability, they play with that card revealed until that card leaves their hand, that ability resolves, or that ability otherwise leaves the stack. (See rule 701.16a.)
 
-702.95. Soulbond
+702.95.! Soulbond
     702.95a Soulbond is a keyword that represents two triggered abilities. “Soulbond” means “When this creature enters the battlefield, if you control both this creature and another creature and both are unpaired, you may pair this creature with another unpaired creature you control for as long as both remain creatures on the battlefield under your control” and “Whenever another creature enters the battlefield under your control, if you control both that creature and this one and both are unpaired, you may pair that creature with this creature for as long as both remain creatures on the battlefield under your control.”
     702.95b A creature becomes “paired” with another as the result of a soulbond ability. Abilities may refer to a paired creature, the creature another creature is paired with, or whether a creature is paired. An “unpaired” creature is one that is not paired.
     702.95c When the soulbond ability resolves, if either object that would be paired is no longer a creature, no longer on the battlefield, or no longer under the control of the player who controls the soulbond ability, neither object becomes paired.
     702.95d A creature can be paired with only one other creature.
     702.95e A paired creature becomes unpaired if any of the following occur: another player gains control of it or the creature it’s paired with; it or the creature it’s paired with stops being a creature; or it or the creature it’s paired with leaves the battlefield.
 
-702.96. Overload
+702.96.! Overload
     702.96a Overload is a keyword that represents two static abilities that function while the spell with overload is on the stack. Overload [cost] means “You may choose to pay [cost] rather than pay this spell’s mana cost” and “If you chose to pay this spell’s overload cost, change its text by replacing all instances of the word ‘target’ with the word ‘each.’” Casting a spell using its overload ability follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.96b If a player chooses to pay the overload cost of a spell, that spell won’t require any targets. It may affect objects that couldn’t be chosen as legal targets if the spell were cast without its overload cost being paid.
     702.96c Overload’s second ability creates a text-changing effect. See rule 612, “Text-Changing Effects.”
 
-702.97. Scavenge
+702.97.! Scavenge
     702.97a Scavenge is an activated ability that functions only while the card with scavenge is in a graveyard. “Scavenge [cost]” means “[Cost], Exile this card from your graveyard: Put a number of +1/+1 counters equal to the power of the card you exiled on target creature. Activate only as a sorcery.”
 
-702.98. Unleash
+702.98.! Unleash
     702.98a Unleash is a keyword that represents two static abilities. “Unleash” means “You may have this permanent enter the battlefield with an additional +1/+1 counter on it” and “This permanent can’t block as long as it has a +1/+1 counter on it.”
 
-702.99. Cipher
+702.99.! Cipher
     702.99a Cipher appears on some instants and sorceries. It represents two abilities. The first is a spell ability that functions while the spell with cipher is on the stack. The second is a static ability that functions while the card with cipher is in the exile zone. “Cipher” means “If this spell is represented by a card, you may exile this card encoded on a creature you control” and “For as long as this card is encoded on that creature, that creature has ‘Whenever this creature deals combat damage to a player, you may copy the encoded card and you may cast the copy without paying its mana cost.’”
     702.99b The term “encoded” describes the relationship between the card with cipher while in the exile zone and the creature chosen when the spell represented by that card resolves.
     702.99c The card with cipher remains encoded on the chosen creature as long as the card with cipher remains exiled and the creature remains on the battlefield. The card remains encoded on that object even if it changes controller or stops being a creature, as long as it remains on the battlefield.
 
-702.100. Evolve
+702.100.! Evolve
     702.100a Evolve is a triggered ability. “Evolve” means “Whenever a creature enters the battlefield under your control, if that creature’s power is greater than this creature’s power and/or that creature’s toughness is greater than this creature’s toughness, put a +1/+1 counter on this creature.”
     702.100b A creature “evolves” when one or more +1/+1 counters are put on it as a result of its evolve ability resolving.
     702.100c A creature can’t have a greater power or toughness than a noncreature permanent.
     702.100d If a creature has multiple instances of evolve, each triggers separately.
 
-702.101. Extort
+702.101.! Extort
     702.101a Extort is a triggered ability. “Extort” means “Whenever you cast a spell, you may pay {W/B}. If you do, each opponent loses 1 life and you gain life equal to the total life lost this way.”
     702.101b If a permanent has multiple instances of extort, each triggers separately.
 
-702.102. Fuse
+702.102.! Fuse
     702.102a Fuse is a static ability found on some split cards (see rule 709, “Split Cards”) that applies while the card with fuse is in a player’s hand. If a player casts a split card with fuse from their hand, the player may choose to cast both halves of that split card rather than choose one half. This choice is made before putting the split card with fuse onto the stack. The resulting spell is a fused split spell.
     702.102b A fused split spell has the combined characteristics of its two halves. (See rule 709.4.)
     702.102c The total cost of a fused split spell includes the mana cost of each half.
     702.102d As a fused split spell resolves, the controller of the spell follows the instructions of the left half and then follows the instructions of the right half.
 
-702.103. Bestow
+702.103.! Bestow
     702.103a Bestow represents a static ability that functions in any zone from which you could play the card it’s on. “Bestow [cost]” means “As you cast this spell, you may choose to cast it bestowed. If you do, you pay [cost] rather than its mana cost.” Casting a spell using its bestow ability follows the rules for paying alternative costs (see 601.2b and 601.2f–h).
     702.103b As a spell cast bestowed is put onto the stack, it becomes an Aura enchantment and gains enchant creature. It is a bestowed Aura spell, and the permanent it becomes as it resolves will be a bestowed Aura. These effects last until the spell or the permanent it becomes ceases to be bestowed (see rules 702.103e–g). Because the spell is an Aura spell, its controller must choose a legal target for that spell as defined by its enchant creature ability and rule 601.2c. See also rule 303.4.
     702.103c If a bestowed Aura spell is copied, the copy is also a bestowed Aura spell. Any rule that refers to a spell cast bestowed applies to the copy as well.
     702.103d When casting a spell bestowed, only its characteristics as modified by the bestow ability are evaluated to determine if it can be cast.
-
     Example: Aether Storm is an enchantment with the ability “Creature spells can’t be cast.” This effect doesn’t stop a creature card with bestow from being cast bestowed.
-
     Example: Garruk’s Horde says, in part, “You may cast creature spells from the top of your library.” If you control Garruk’s Horde and the top card of your library is a creature card with bestow, you can cast it as a creature spell, but you can’t cast it bestowed.
     702.103e As a bestowed Aura spell begins resolving, if its target is illegal, it ceases to be bestowed and the effect making it an Aura spell ends. It continues resolving as a creature spell. See rule 608.3b.
     702.103f If a bestowed Aura becomes unattached, it ceases to be bestowed. If a bestowed Aura is attached to an illegal object or player, it becomes unattached and ceases to be bestowed. This is an exception to rule 704.5m.
     702.103g If a bestowed Aura phases in unattached, it ceases to be bestowed. See rule 702.26, “Phasing.”
 
-702.104. Tribute
+702.104.! Tribute
     702.104a Tribute is a static ability that functions as the creature with tribute is entering the battlefield. “Tribute N” means “As this creature enters the battlefield, choose an opponent. That player may put an additional N +1/+1 counters on it as it enters the battlefield.”
     702.104b Objects with tribute have triggered abilities that check “if tribute wasn’t paid.” This condition is true if the opponent chosen as a result of the tribute ability didn’t have the creature enter the battlefield with +1/+1 counters as specified by the creature’s tribute ability.
 
-702.105. Dethrone
+702.105.! Dethrone
     702.105a Dethrone is a triggered ability. “Dethrone” means “Whenever this creature attacks the player with the most life or tied for most life, put a +1/+1 counter on this creature.”
     702.105b If a creature has multiple instances of dethrone, each triggers separately.
 
-702.106. Hidden Agenda
+702.106.! Hidden Agenda
     702.106a Hidden agenda is a static ability that functions as a conspiracy card with hidden agenda is put into the command zone. “Hidden agenda” means “As you put this conspiracy card into the command zone, turn it face down and secretly choose a card name.”
     702.106b To secretly choose a card name, note that name on a piece of paper kept with the face-down conspiracy card.
     702.106c Any time you have priority, you may turn a face-down conspiracy card you control in the command zone face up. This is a special action. Doing so will reveal the chosen name. See rule 116.2j.
@@ -567,76 +589,76 @@
     702.106e If a player leaves the game, all face-down conspiracy cards controlled by that player must be revealed to all players. At the end of each game, all face-down conspiracy cards must be revealed to all players.
     702.106f Double agenda is a variant of the hidden agenda ability. As you put a conspiracy card with double agenda into the command zone, you secretly name two different cards rather than one. You don’t reveal that more than one name was secretly chosen until you reveal the chosen names.
 
-702.107. Outlast
+702.107.! Outlast
     702.107a Outlast is an activated ability. “Outlast [cost]” means “[Cost], {T}: Put a +1/+1 counter on this creature. Activate only as a sorcery.”
 
-702.108. Prowess
+702.108.! Prowess
     702.108a Prowess is a triggered ability. “Prowess” means “Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.”
     702.108b If a creature has multiple instances of prowess, each triggers separately.
 
-702.109. Dash
+702.109.! Dash
     702.109a Dash represents three abilities: two static abilities that function while the card with dash is on the stack, one of which may create a delayed triggered ability, and a static ability that functions while the object with dash is on the battlefield. “Dash [cost]” means “You may cast this card by paying [cost] rather than its mana cost,” “If this spell’s dash cost was paid, return the permanent this spell becomes to its owner’s hand at the beginning of the next end step,” and “As long as this permanent’s dash cost was paid, it has haste.” Casting a spell for its dash cost follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
 
-702.110. Exploit
+702.110.! Exploit
     702.110a Exploit is a triggered ability. “Exploit” means “When this creature enters the battlefield, you may sacrifice a creature.”
     702.110b A creature with exploit “exploits a creature” when the controller of the exploit ability sacrifices a creature as that ability resolves.
 
-702.111. Menace
+702.111.! Menace
     702.111a Menace is an evasion ability.
     702.111b A creature with menace can’t be blocked except by two or more creatures. (See rule 509, “Declare Blockers Step.”)
     702.111c Multiple instances of menace on the same creature are redundant.
 
-702.112. Renown
+702.112.! Renown
     702.112a Renown is a triggered ability. “Renown N” means “When this creature deals combat damage to a player, if it isn’t renowned, put N +1/+1 counters on it and it becomes renowned.”
     702.112b Renowned is a designation that has no rules meaning other than to act as a marker that the renown ability and other spells and abilities can identify. Only permanents can be or become renowned. Once a permanent becomes renowned, it stays renowned until it leaves the battlefield. Renowned is neither an ability nor part of the permanent’s copiable values.
     702.112c If a creature has multiple instances of renown, each triggers separately. The first such ability to resolve will cause the creature to become renowned, and subsequent abilities will have no effect. (See rule 603.4)
 
-702.113. Awaken
+702.113.! Awaken
     702.113a Awaken appears on some instants and sorceries. It represents two abilities: a static ability that functions while the spell with awaken is on the stack and a spell ability. “Awaken N—[cost]” means “You may pay [cost] rather than pay this spell’s mana cost as you cast this spell” and “If this spell’s awaken cost was paid, put N +1/+1 counters on target land you control. That land becomes a 0/0 Elemental creature with haste. It’s still a land.” Casting a spell using its awaken ability follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.113b The controller of a spell with awaken chooses the target of the awaken spell ability only if that player chose to pay the spell’s awaken cost. Otherwise the spell is cast as if it didn’t have that target.
 
-702.114. Devoid
+702.114.! Devoid
     702.114a Devoid is a characteristic-defining ability. “Devoid” means “This object is colorless.” This ability functions everywhere, even outside the game. See rule 604.3.
 
-702.115. Ingest
+702.115.! Ingest
     702.115a Ingest is a triggered ability. “Ingest” means “Whenever this creature deals combat damage to a player, that player exiles the top card of their library.”
     702.115b If a creature has multiple instances of ingest, each triggers separately.
 
-702.116. Myriad
+702.116.! Myriad
     702.116a Myriad is a triggered ability that may also create a delayed triggered ability. “Myriad” means “Whenever this creature attacks, for each opponent other than defending player, you may create a token that’s a copy of this creature that’s tapped and attacking that player or a planeswalker they control. If one or more tokens are created this way, exile the tokens at end of combat.”
     702.116b If a creature has multiple instances of myriad, each triggers separately.
 
-702.117. Surge
+702.117.! Surge
     702.117a Surge is a static ability that functions while the spell with surge is on the stack. “Surge [cost]” means “You may pay [cost] rather than pay this spell’s mana cost as you cast this spell if you or one of your teammates has cast another spell this turn.” Casting a spell for its surge cost follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
 
-702.118. Skulk
+702.118.! Skulk
     702.118a Skulk is an evasion ability.
     702.118b A creature with skulk can’t be blocked by creatures with greater power. (See rule 509, “Declare Blockers Step.”)
     702.118c Multiple instances of skulk on the same creature are redundant.
 
-702.119. Emerge
+702.119.! Emerge
     702.119a Emerge represents two static abilities that function while the spell with emerge is on the stack. “Emerge [cost]” means “You may cast this spell by paying [cost] and sacrificing a creature rather than paying its mana cost” and “If you chose to pay this spell’s emerge cost, its total cost is reduced by an amount of generic mana equal to the sacrificed creature’s mana value.” Casting a spell using its emerge ability follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.119b Emerge from [quality] is a variant of emerge. “Emerge from [quality] [cost]” means “You may cast this spell by paying [cost] and sacrificing a [quality] permanent rather than paying its mana cost” and “If you pay this spell’s emerge cost, its total cost is reduced by an amount of generic mana equal to the sacrificed permanent’s mana value.”
     702.119c You choose which permanent to sacrifice as you choose to pay a spell’s emerge cost (see rule 601.2b), and you sacrifice that permanent as you pay the total cost (see rule 601.2h).
 
-702.120. Escalate
+702.120.! Escalate
     702.120a Escalate is a static ability of modal spells (see rule 700.2) that functions while the spell with escalate is on the stack. “Escalate [cost]” means “For each mode you choose beyond the first as you cast this spell, you pay an additional [cost].” Paying a spell’s escalate cost follows the rules for paying additional costs in rules 601.2f–h.
 
-702.121. Melee
+702.121.! Melee
     702.121a Melee is a triggered ability. “Melee” means “Whenever this creature attacks, it gets +1/+1 until end of turn for each opponent you attacked with a creature this combat.”
     702.121b If a creature has multiple instances of melee, each triggers separately.
 
-702.122. Crew
+702.122.! Crew
     702.122a Crew is an activated ability of Vehicle cards. “Crew N” means “Tap any number of other untapped creatures you control with total power N or greater: This permanent becomes an artifact creature until end of turn.”
     702.122b A creature “crews a Vehicle” when it’s tapped to pay the cost to activate a Vehicle’s crew ability.
     702.122c If an effect states that a creature “can’t crew Vehicles,” that creature can’t be tapped to pay the crew cost of a Vehicle.
     702.122d Some Vehicles have abilities that trigger when they become crewed. “Whenever [this Vehicle] becomes crewed” means “Whenever a crew ability of [this Vehicle] resolves.” If that ability has an intervening “if” clause that refers to information about the creatures that crewed it, it means only creatures that were tapped to pay the cost of the crew ability that caused it to trigger.
 
-702.123. Fabricate
+702.123.! Fabricate
     702.123a Fabricate is a triggered ability. “Fabricate N” means “When this permanent enters the battlefield, you may put N +1/+1 counters on it. If you don’t, create N 1/1 colorless Servo artifact creature tokens.”
     702.123b If a permanent has multiple instances of fabricate, each triggers separately.
 
-702.124. Partner
+702.124.! Partner
     702.124a Partner abilities are keyword abilities that modify the rules for deck construction in the Commander variant (see rule 903), and they function before the game begins. Each partner ability allows you to designate two legendary cards as your commander rather than one. Each partner ability has its own requirements for those two commanders. The partner abilities are: partner, partner with [name], friends forever, choose a Background, and Doctor’s companion.
     702.124b Your deck must contain exactly 100 cards, including its two commanders. Both commanders begin the game in the command zone.
     702.124c A rule or effect that refers to your commander’s color identity refers to the combined color identities of your two commanders. See rule 903.4.
@@ -651,70 +673,70 @@
     702.124m “Doctor’s companion” means “You may designate two legendary creature cards as your commander rather than one if one of them is this card and the other is a legendary Time Lord Doctor creature card that has no other creature types.”
     702.124n If an effect refers to a partner ability by name, it means only that partner ability and not any others. If an effect refers to the partner ability or cards with partner and doesn’t mention a specific variant of the partner ability by name, it is referring only to partner, partner with [name], or cards with either of those abilities, and does not refer to any other partner variant.
 
-702.125. Undaunted
+702.125.! Undaunted
     702.125a Undaunted is a static ability that functions while the spell with undaunted is on the stack. Undaunted means “This spell costs {1} less to cast for each opponent you have.”
     702.125b Players who have left the game are not counted when determining how many opponents you have.
     702.125c If a spell has multiple instances of undaunted, each of them applies.
 
-702.126. Improvise
+702.126.! Improvise
     702.126a Improvise is a static ability that functions while the spell with improvise is on the stack. “Improvise” means “For each generic mana in this spell’s total cost, you may tap an untapped artifact you control rather than pay that mana.”
     702.126b The improvise ability isn’t an additional or alternative cost and applies only after the total cost of the spell with improvise is determined.
     702.126c Multiple instances of improvise on the same spell are redundant.
 
-702.127. Aftermath
+702.127.! Aftermath
     702.127a Aftermath is an ability found on some split cards (see rule 709, “Split Cards”). It represents three static abilities. “Aftermath” means “You may cast this half of this split card from your graveyard,” “This half of this split card can’t be cast from any zone other than a graveyard,” and “If this spell was cast from a graveyard, exile it instead of putting it anywhere else any time it would leave the stack.”
 
-702.128. Embalm
+702.128.! Embalm
     702.128a Embalm is an activated ability that functions while the card with embalm is in a graveyard. “Embalm [cost]” means “[Cost], Exile this card from your graveyard: Create a token that’s a copy of this card, except it’s white, it has no mana cost, and it’s a Zombie in addition to its other types. Activate only as a sorcery.”
     702.128b A token is “embalmed” if it’s created by a resolving embalm ability.
 
-702.129. Eternalize
+702.129.! Eternalize
     702.129a Eternalize is an activated ability that functions while the card with eternalize is in a graveyard. “Eternalize [cost]” means “[Cost], Exile this card from your graveyard: Create a token that’s a copy of this card, except it’s black, it’s 4/4, it has no mana cost, and it’s a Zombie in addition to its other types. Activate only as a sorcery.”
 
-702.130. Afflict
+702.130.! Afflict
     702.130a Afflict is a triggered ability. “Afflict N” means “Whenever this creature becomes blocked, defending player loses N life.”
     702.130b If a creature has multiple instances of afflict, each triggers separately.
 
-702.131. 
+702.131.! Ascend
     702.131a Ascend on an instant or sorcery spell represents a spell ability. It means “If you control ten or more permanents and you don’t have the city’s blessing, you get the city’s blessing for the rest of the game.”
     702.131b Ascend on a permanent represents a static ability. It means “Any time you control ten or more permanents and you don’t have the city’s blessing, you get the city’s blessing for the rest of the game.”
     702.131c The city’s blessing is a designation that has no rules meaning other than to act as a marker that other rules and effects can identify. Any number of players may have the city’s blessing at the same time.
     702.131d After a player gets the city’s blessing, continuous effects are reapplied before the game checks to see if the game state or preceding events have matched any trigger conditions.
 
-702.132. Assist
+702.132.! Assist
     702.132a Assist is a static ability that modifies the rules of paying for the spell with assist (see rules 601.2g-h). If the total cost to cast a spell with assist includes a generic mana component, before you activate mana abilities while casting it, you may choose another player. That player has a chance to activate mana abilities. Once that player chooses not to activate any more mana abilities, you have a chance to activate mana abilities. Before you begin to pay the total cost of the spell, the player you chose may pay for any amount of the generic mana in the spell’s total cost.
 
-702.133. Jump-Start
+702.133.! Jump-Start
     702.133a Jump-start appears on some instants and sorceries. It represents two static abilities: one that functions while the card is in a player’s graveyard and another that functions while the card is on the stack. “Jump-start” means “You may cast this card from your graveyard if the resulting spell is an instant or sorcery spell by discarding a card as an additional cost to cast it” and “If this spell was cast using its jump-start ability, exile this card instead of putting it anywhere else any time it would leave the stack.” Casting a spell using its jump-start ability follows the rules for paying additional costs in rules 601.2b and 601.2f–h.
 
-702.134. Mentor
+702.134.! Mentor
     702.134a Mentor is a triggered ability. “Mentor” means “Whenever this creature attacks, put a +1/+1 counter on target attacking creature with power less than this creature’s power.”
     702.134b If a creature has multiple instances of mentor, each triggers separately.
     702.134c An ability that triggers whenever a creature mentors another creature triggers whenever a mentor ability whose source is the first creature and whose target is the second creature resolves.
 
-702.135. Afterlife
+702.135.! Afterlife
     702.135a Afterlife is a triggered ability. “Afterlife N” means “When this permanent is put into a graveyard from the battlefield, create N 1/1 white and black Spirit creature tokens with flying.”
     702.135b If a permanent has multiple instances of afterlife, each triggers separately.
 
-702.136. Riot
+702.136.! Riot
     702.136a Riot is a static ability. “Riot” means “You may have this permanent enter the battlefield with an additional +1/+1 counter on it. If you don’t, it gains haste.”
     702.136b If a permanent has multiple instances of riot, each works separately.
 
-702.137. Spectacle
+702.137.! Spectacle
     702.137a Spectacle is a static ability that functions on the stack. “Spectacle [cost]” means “You may pay [cost] rather than pay this spell’s mana cost if an opponent lost life this turn.” Casting a spell for its spectacle cost follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
 
-702.138. Escape
+702.138.! Escape
     702.138a Escape represents a static ability that functions while the card with escape is in a player’s graveyard. “Escape [cost]” means “You may cast this card from your graveyard by paying [cost] rather than paying its mana cost.” Casting a spell using its escape ability follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.138b A spell or permanent “escaped” if that spell or the spell that became that permanent as it resolved was cast from a graveyard with an escape ability.
     702.138c An ability that reads “[This permanent] escapes with [one or more of a kind of counter]” means “If this permanent escaped, it enters the battlefield with [those counters]” That ability may have a triggered ability linked to it that triggers “When it enters the battlefield this way.” (See rule 603.11.) Such a triggered ability triggers when that permanent enters the battlefield after its replacement effect was applied, even if that replacement effect had no effect.
     702.138d An ability that reads “[This permanent] escapes with [ability]” means “If this permanent escaped, it has [ability].”
 
-702.139. Companion
+702.139.! Companion
     702.139a Companion is a keyword ability that functions outside the game. It’s written as “Companion—[Condition].” Before the game begins, you may reveal one card you own from outside the game with a companion ability whose condition is fulfilled by your starting deck. (See rule 103.2b.) Once during the game, any time you have priority and the stack is empty, but only during a main phase of your turn, you may pay {3} and put that card into your hand. This is a special action that doesn’t use the stack (see rule 116.2g). This is a change from previous rules.
     702.139b If a companion ability refers to your starting deck, it refers to your deck after you’ve set aside any sideboard cards. In a Commander game, this is also before you’ve set aside your commander.
     702.139c Once you take the special action and put the card with companion into your hand, it remains in the game until the game ends.
 
-702.140. Mutate
+702.140.! Mutate
     702.140a Mutate appears on some creature cards. It represents a static ability that functions while the spell with mutate is on the stack. “Mutate [cost]” means “You may pay [cost] rather than pay this spell’s mana cost. If you do, it becomes a mutating creature spell and targets a non-Human creature with the same owner as this spell.” Casting a spell using its mutate ability follows the rules for paying alternative costs (see 601.2b and 601.2f–h).
     702.140b As a mutating creature spell begins resolving, if its target is illegal, it ceases to be a mutating creature spell and continues resolving as a creature spell and will be put onto the battlefield under the control of the spell’s controller.
     702.140c As a mutating creature spell resolves, if its target is legal, it doesn’t enter the battlefield. Rather, it merges with the target creature and becomes one object represented by more than one card or token (see rule 727, “Merging with Permanents”). The spell’s controller chooses whether the spell is put on top of the creature or on the bottom. The resulting permanent is a mutated permanent.
@@ -722,14 +744,14 @@
     702.140e A mutated permanent has all abilities of each card and token that represents it. Its other characteristics are derived from the topmost card or token.
     702.140f Any effect that refers to or modifies the mutating creature spell refers to or modifies the mutated permanent it merges with as it resolves.
 
-702.141. Encore
+702.141.! Encore
     702.141a Encore is an activated ability that functions while the card with encore is in a graveyard. “Encore [cost]” means “[Cost], Exile this card from your graveyard: For each opponent, create a token that’s a copy of this card that attacks that opponent this turn if able. The tokens gain haste. Sacrifice them at the beginning of the next end step. Activate only as a sorcery.”
 
-702.142. Boast
+702.142.! Boast
     702.142a A boast ability is a special kind of activated ability. “Boast — [Cost]: [Effect]” means “[Cost]: [Effect]. Activate only if this creature attacked this turn and only once each turn.”
     702.142b Effects may refer to boast abilities. If an effect refers to a creature boasting, it means its boast ability being activated.
 
-702.143. Foretell
+702.143.! Foretell
     702.143a Foretell is a keyword that functions while the card with foretell is in a player’s hand. Any time a player has priority during their turn, that player may pay {2} and exile a card with foretell from their hand face down. That player may look at that card as long as it remains in exile. They may cast that card after the current turn has ended by paying any foretell cost it has rather than paying that spell’s mana cost. Casting a spell this way follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.143b Exiling a card using its foretell ability is a special action, which doesn’t use the stack. See rule 116, “Special Actions.”
     702.143c If an effect refers to foretelling a card, it means performing the special action associated with a foretell ability. If an effect refers to a card or spell that was foretold, it means a card put in the exile zone as a result of the special action associated with a foretell ability, or a spell that was a foretold card before it was cast, even if it was cast for a cost other than a foretell cost.
@@ -737,10 +759,10 @@
     702.143e If a player owns multiple foretold cards in exile, they must ensure that those cards can be easily differentiated from each other and from any other face-down cards in exile which that player owns. This includes knowing both the order in which those cards were put into exile and any foretell costs other than their printed foretell costs those cards may have.
     702.143f If a player leaves the game, all face-down foretold cards that player owns must be revealed to all players. At the end of each game, all face-down foretold cards must be revealed to all players.
 
-702.144. Demonstrate
+702.144.! Demonstrate
     702.144a Demonstrate is a triggered ability. “Demonstrate” means “When you cast this spell, you may copy it and you may choose new targets for the copy. If you copy the spell, choose an opponent. That player copies the spell and may choose new targets for that copy.”
 
-702.145. Daybound and Nightbound
+702.145.! Daybound and Nightbound
     702.145a Daybound and nightbound are found on opposite faces of some transforming double-faced cards (see rule 712, “Double-Faced Cards”).
     702.145b Daybound is found on the front faces of some transforming double-faced cards and represents three static abilities. “Daybound” means “If it is night and this permanent is represented by a transforming double-faced card, it enters the battlefield transformed,” “As it becomes night, if this permanent is front face up, transform it,” and “This permanent can’t transform except due to its daybound ability.” See rule 727, “Day and Night.”
     702.145c Any time a player controls a permanent that is front face up with daybound and it’s night, that player transforms that permanent. This happens immediately and isn’t a state-based action.
@@ -749,102 +771,101 @@
     702.145f Any time a player controls a permanent that is back face up with nightbound and it’s day, that player transforms that permanent. This happens immediately and isn’t a state-based action.
     702.145g Any time a player controls a permanent with nightbound, if it’s neither day nor night and there are no permanents with daybound on the battlefield, it becomes night.
 
-702.146. Disturb
+702.146.! Disturb
     702.146a Disturb is an ability found on the front face of some transforming double-faced cards (see rule 712, “Double-Faced Cards”). “Disturb [cost]” means “You may cast this card transformed from your graveyard by paying [cost] rather than its mana cost.” See rule 712.8c.
     702.146b A resolving transforming double-faced spell that was cast using its disturb ability enters the battlefield with its back face up.
 
-702.147. Decayed
+702.147.! Decayed
     702.147a Decayed represents a static ability and a triggered ability. “Decayed” means “This creature can’t block” and “When this creature attacks, sacrifice it at end of combat.”
 
-702.148. Cleave
+702.148.! Cleave
     702.148a Cleave is a keyword that represents two static abilities that function while a spell with cleave is on the stack. “Cleave [cost]” means “You may cast this spell by paying [cost] rather than paying its mana cost” and “If this spell’s cleave cost was paid, change its text by removing all text found within square brackets in the spell’s rules text.” Casting a spell for its cleave cost follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.148b Cleave’s second ability is a text-changing effect. See rule 612, “Text-Changing Effects.”
 
-702.149. Training
+702.149.! Training
     702.149a Training is a triggered ability. “Training” means “Whenever this creature and at least one other creature with power greater than this creature’s power attack, put a +1/+1 counter on this creature.”
     702.149b If a creature has multiple instances of training, each triggers separately.
     702.149c Some creatures with training have abilities that trigger when they train. “When this creature trains” means “When a resolving training ability puts one or more +1/+1 counters on this creature.”
 
-702.150. Compleated
+702.150.! Compleated
     702.150a Compleated is a static ability found on some planeswalker cards. Compleated means “If this permanent would enter the battlefield with one or more loyalty counters on it and the player who cast it chose to pay life for any part of its cost represented by Phyrexian mana symbols, it instead enters the battlefield with that many loyalty counters minus two for each of those mana symbols.”
 
-702.151. Reconfigure
+702.151.! Reconfigure
     702.151a Reconfigure represents two activated abilities. Reconfigure [cost] means “[Cost]: Attach this permanent to another target creature you control. Activate only as a sorcery” and “[Cost]: Unattach this permanent. Activate only if this permanent is attached to a creature and only as a sorcery.”
     702.151b Attaching an Equipment with reconfigure to another creature causes the Equipment to stop being a creature until it becomes unattached from that creature.
 
-702.152. Blitz
+702.152.! Blitz
     702.152a Blitz represents three abilities: two static abilities that function while the card with blitz is on the stack, one of which may create a delayed triggered ability, and a static ability that functions while the object with blitz is on the battlefield. “Blitz [cost]” means “You may cast this card by paying [cost] rather than its mana cost,” “If this spell’s blitz cost was paid, sacrifice the permanent this spell becomes at the beginning of the next end step,” and “As long as this permanent’s blitz cost was paid, it has haste and ‘When this permanent is put into a graveyard from the battlefield, draw a card.’” Casting a spell for its blitz cost follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     702.152b If a spell has multiple instances of blitz, only one may be used to cast that spell. If a permanent has multiple instances of blitz, each one refers only to payments made for that blitz ability as the spell was cast, not to any payments made for other instances of blitz.
 
-702.153. Casualty
+702.153.! Casualty
     702.153a Casualty is a keyword that represents two abilities. The first is a static ability that functions while the spell with casualty is on the stack. The second is a triggered ability that functions while the spell with casualty is on the stack. Casualty N means “As an additional cost to cast this spell, you may sacrifice a creature with power N or greater,” and “When you cast this spell, if a casualty cost was paid for it, copy it. If the spell has any targets, you may choose new targets for the copy.” Paying a spell’s casualty cost follows the rules for paying additional costs in rules 601.2b and 601.2f–h.
     702.153b If a spell has multiple instances of casualty, each is paid separately and triggers based on the payments made for it, not any other instance of casualty.
 
-702.154. Enlist
+702.154.! Enlist
     702.154a Enlist represents a static ability and a triggered ability. Enlist means “As this creature attacks, you may tap up to one untapped creature you control that you didn’t choose to attack with and that either has haste or has been under your control continuously since this turn began. When you do, this creature gets +X/+0 until end of turn, where X is the tapped creature’s power.”
     702.154b Enlist’s static ability represents an optional cost to attack (see rule 508.1g). Its triggered ability is linked to that static ability (see rule 607.2h).
     702.154c A creature “enlists” another creature when you pay the cost of the creature’s enlist ability by tapping the other creature. Note that it isn’t possible for a creature to enlist itself.
     702.154d Multiple instances of enlist on a single creature function independently. The triggered ability represented by each instance of enlist triggers only once and only for the cost associated with that enlist ability.
 
-702.155. Read Ahead
+702.155.! Read Ahead
     702.155a Read ahead is a keyword found on some Saga cards. “Read ahead” means “Chapter abilities of this Saga can’t trigger the turn it entered the battlefield unless it has exactly the number of lore counters on it specified in the chapter symbol of that ability.” See rule 714, “Saga Cards.”
     702.155b As a Saga with the read ahead ability enters the battlefield, its controller chooses a number from one to that Saga’s final chapter number. That Saga enters the battlefield with the chosen number of lore counters on it. See rule 714, “Saga Cards.”
     702.155c Multiple instances of read ahead on the same object are redundant.
 
-702.156. Ravenous
+702.156.! Ravenous
     702.156a Ravenous is a keyword found on some creature cards with {X} in their mana cost. Ravenous represents both a replacement effect and a triggered ability. “Ravenous” means “This permanent enters the battlefield with X +1/+1 counters on it” and “When this permanent enters the battlefield, if X is 5 or more, draw a card.” See rule 107.3m.
 
-702.157. Squad
+702.157.! Squad
     702.157a Squad is a keyword that represents two linked abilities. The first is a static ability that functions while the creature spell with squad is on the stack. The second is a triggered ability that functions when the creature with squad enters the battlefield. “Squad [cost]” means “As an additional cost to cast this spell, you may pay [cost] any number of times” and “When this creature enters the battlefield, if its squad cost was paid, create a token that’s a copy of it for each time its squad cost was paid.” Paying a spell’s squad cost follows the rules for paying additional costs in rules 601.2b and 601.2f–h.
     702.157b If a spell has multiple instances of squad, each is paid separately. If a permanent has multiple instances of squad, each triggers based on the payments made for that squad ability as it was cast, not based on payments for any other instance of squad.
 
-702.158. Space Sculptor
+702.158.! Space Sculptor
     702.158a One card (Space Beleren) has the space sculptor ability. This keyword ability causes creatures to gain sector designations.
     702.158b A sector designation is a designation a permanent can have. The sector designations are alpha sector, beta sector, and gamma sector. Only permanents can have a sector designation. Once a permanent gets a sector designation, it keeps it until no player controls a permanent with space sculptor or an ability whose source has space sculptor. A sector designation is not part of the permanent’s copiable values.
     702.158c Any time a permanent with space sculptor and any creatures without a sector designation are on the battlefield at the same time, each player who controls one or more of those creatures and doesn’t control a permanent with space sculptor chooses a sector designation for each of those creatures they control. Then, each other player who controls one or more of those creatures chooses a sector designation for each of those creatures they control. This is a state-based action (see rule 704.5u).
     702.158d Some abilities include an instruction to choose a sector along with an instruction to perform an action on each creature in that sector. To do this, choose one of the three sector designations, then perform that action on each creature with that sector designation.
     702.158e Two permanents are in the same sector if each has the same sector designation.
 
-702.159. Visit
+702.159.! Visit
     702.159a Visit is a keyword ability found on Attraction cards (see rule 717). “Visit — [Effect]” means “Whenever you roll to visit your Attractions, if the result is equal to a number that is lit up on this Attraction, [effect].” See rule 701.49, “Roll to Visit Your Attractions.”
     702.159b Some Attractions instruct a player to “claim the prize,” followed by a second paragraph that starts with the word “Prize” and a long dash. This text is part of its visit ability. To claim the prize of an Attraction, perform the actions listed after the long dash.
 
-702.160. Prototype
+702.160.! Prototype
     702.160a Prototype is a static ability that appears on prototype cards that have a secondary set of power, toughness, and mana cost characteristics. A player who casts a spell with prototype can choose to cast that card “protoyped.” If they do, the alternative set of its power, toughness, and mana cost characteristics are used. See 718, “Prototype Cards.”
 
-702.161. Living Metal
+702.161.! Living Metal
     702.161a Living metal is a keyword ability found on some Vehicles. “Living metal” means “During your turn, this permanent is an artifact creature in addition to its other types.”
 
-702.162. More Than Meets the Eye
+702.162.! More Than Meets the Eye
 
-702.163. For Mirrodin!
+702.163.! For Mirrodin!
     702.163a For Mirrodin! is a triggered ability. “For Mirrodin!” means “When this Equipment enters the battlefield, create a 2/2 red Rebel creature token, then attach this Equipment to it.”
 
-702.164. Toxic
+702.164.! Toxic
     702.164a Toxic is a static ability. It is written “toxic N,” where N is a number.
     702.164b Some rules and effects refer to a creature’s “total toxic value.” A creature’s total toxic value is the sum of all N values of toxic abilities that creature has.
-
     Example: If a creature with toxic 2 gains toxic 1 due to another effect, its total toxic value is 3.
     702.164c Combat damage dealt to a player by a creature with toxic causes that creature’s controller to give the player a number of poison counters equal to that creature’s total toxic value, in addition to the damage’s other results. See rule 120.3.
 
-702.165. Backup
+702.165.! Backup
     702.165a Backup is a triggered ability. “Backup N” means “When this creature enters the battlefield, put N +1/+1 counters on target creature. If that’s another creature, it also gains the non-backup abilities of this creature printed below this one until end of turn.” Cards with backup have one or more abilities printed after the backup ability. (Some cards with backup also have abilities printed before the backup ability.)
     702.165b If a permanent enters the battlefield as a copy of a permanent with a backup ability or a token is created that is a copy of that permanent, the order of abilities printed on it is maintained.
     702.165c Only abilities printed on the object with backup are granted by its backup ability. Any abilities gained by a permanent, whether due to a copy effect, an effect that grants an ability to a permanent, or an effect that creates a token with certain abilities, are not granted by a backup ability.
     702.165d The abilities that a backup ability grants are determined as the ability is put on the stack. They won’t change if the permanent with backup loses any abilities after the ability is put on the stack but before it resolves.
 
-702.166. Bargain
+702.166.! Bargain
     702.166a Bargain is a static ability that functions while the spell with bargain is on the stack. “Bargain” means “As an additional cost to cast this spell, you may sacrifice an artifact, enchantment, or token.” Paying a spell’s bargain cost follows the rules for paying additional costs in rules 601.2b and 601.2f–h.
     702.166b If a spell’s controller declares the intention to pay that spell’s bargain cost, that spell has been “bargained.” See rule 601.2b.
     702.166c Objects with bargain have additional abilities that specify what happens if they were bargained. These abilities are linked to the bargain ability printed on that object: they can refer only to that specific bargain ability. See rule 607, “Linked Abilities.”
     702.166d If part of a spell’s ability has its effect only if that spell was bargained and that part of the ability includes any targets, the spell’s controller chooses those targets only if that spell was bargained. Otherwise, the spell is cast as if it did not have those targets. See rule 601.2c.
 
-702.167. Craft
+702.167.! Craft
     702.167a Craft represents an activated ability. It is written as “Craft with [materials] [cost],” where [materials] is a description of one or more objects. It means “[Cost], Exile this permanent, Exile [materials] from among permanents you control and/or cards in your graveyard: Return this card to the battlefield transformed under its owner’s control. Activate only as a sorcery.”
     702.167b If an object in the [materials] of a craft ability is described using only a card type or subtype without the word “card,” it refers to either a permanent on the battlefield that is that type or subtype or a card in a graveyard that is that type or subtype. This is an exception to rule 109.2.
     702.167c An ability of a permanent may refer to the exiled cards used to craft it. This refers to cards in exile that were exiled to pay the activation cost of the craft ability that put this permanent onto the battlefield.
 
-702.168. Disguise
+702.168.! Disguise
     702.168a Disguise is a static ability that functions in any zone from which you could play the card it’s on, and the disguise effect works any time the card is face down. “Disguise [cost]” means “You may cast this card as a 2/2 face-down creature with ward {2}, no name, no subtypes, and no mana cost by paying {3} rather than paying its mana cost.” (See rule 708, “Face-Down Spells and Permanents.”)
     702.168b To cast a card using its disguise ability, turn the card face down and announce that you are using a disguise ability. It becomes a 2/2 face-down creature card with ward {2}, no name, no subtypes, and no mana cost. Any effects or prohibitions that would apply to casting a card with these characteristics (and not the face-up card’s characteristics) are applied to casting this card. These values are the copiable values of that object’s characteristics. (See rule 613, “Interaction of Continuous Effects,” and rule 707, “Copying Objects.”) Put it onto the stack (as a face-down spell with the same characteristics), and pay {3} rather than pay its mana cost. This follows the rules for paying alternative costs. You can use a disguise ability to cast a card from any zone from which you could normally cast it. When the spell resolves, it enters the battlefield with the same characteristics the spell had. The disguise effect applies to the face-down object wherever it is, and it ends when the permanent is turned face up.
     702.168c You can’t normally cast a card face down. A disguise ability allows you to do so.
@@ -852,13 +873,13 @@
     702.168e If a permanent’s disguise cost includes X, other abilities of that permanent may also refer to X. The value of X in those abilities is equal to the value of X chosen as the disguise special action was taken.
     702.168f See rule 708, “Face-Down Spells and Permanents,” for more information about how to cast cards with a disguise ability.
 
-702.169. Solved
+702.169.! Solved
     702.169a Solved is a keyword ability found on Case cards. See rule 719, “Case Cards.” “Solved” is followed by ability text. Together, they represent a static ability, a triggered ability, or an activated ability.
     702.169b For a static ability, “Solved — [Ability text]” means “As long as this Case is solved, [ability text].”
     702.169c For a triggered ability, “Solved — [Ability text]” means “[Ability text]. This ability triggers only if this Case is solved.”
     702.169d For an activated ability, “Solved — [Ability text]” means “[Ability text]. Activate only if this Case is solved.”
 
-702.170. Plot
+702.170.! Plot
     702.170a Plot is a keyword ability that functions while the card with plot is in a player’s hand. “Plot [cost]” means “Any time you have priority during your main phase while the stack is empty, you may exile this card from your hand and pay [cost]. It becomes a plotted card.”
     702.170b Exiling a card using its plot ability is a special action, which doesn’t use the stack. See rule 116, “Special Actions.”
     702.170c In addition to the plot special action, some spells and abilities cause a card in exile to become plotted.
@@ -866,11 +887,11 @@
     702.170e If an effect refers to plotting a card, it means performing the special action associated with a plot ability.
     702.170f An effect may allow the plot ability of a card to function in a zone other than a player’s hand. In that case, the card is exiled from the zone it is in as the action is taken rather than from its owner’s hand.
 
-702.171. Saddle
+702.171.! Saddle
     702.171a Saddle is an activated ability. “Saddle N” means “Tap any number of other untapped creatures you control with power N or greater: This permanent becomes saddled until end of turn. Activate only as a sorcery.”
     702.171b Saddled is a designation that has no rules meaning other than to act as a marker that spells and abilities can identify. Only permanents can be or become saddled. Once a permanent has become saddled, it stays saddled until the end of the turn or it leaves the battlefield. Being saddled is not a part of the permanent’s copiable values.
     702.171c A creature “saddles” a permanent as it’s tapped to pay the cost to activate a permanent’s saddle ability.
 
-702.172. Spree
+702.172.! Spree
     702.172a Spree is a static ability found on some modal spells (see rule 700.2) that applies while the spell on the stack. Spree means “Choose one or more modes. As an additional cost to cast this spell, pay the costs associated with those modes.”
     702.172b Cards with the spree ability have a plus sign icon in the upper right corner of the card. This symbol is a visual reminder that this card requires an additional cost to be cast. This icon has no rules meaning.

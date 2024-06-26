@@ -41,6 +41,17 @@ void Graphical::initInfoItems()
     this->_infoView2.setPosition((1920 / 2) + 400, (1080 / 2));
     this->_infoView2.setSize(sf::Vector2f(400, 600));
     this->_infoView2.setFillColor(sf::Color(70, 70, 70));
+
+    this->_scrollBar.setSize(sf::Vector2f(20, 1080));
+    this->_scrollBar.setFillColor(sf::Color(200, 200, 200));
+    this->_scrollBar.setPosition(600, 0);
+
+    this->_scrollBarCursor.setSize(sf::Vector2f(20, 100));
+    this->_scrollBarCursor.setFillColor(sf::Color(100, 100, 100));
+    this->_scrollBarCursor.setPosition(600, 0);
+    this->_scrollView.setSize(1920, 1080);
+    this->_scrollView.setCenter(960, 540);
+    this->_scrollAmount = 0.0f;
 }
 
 void Graphical::initLoading()
@@ -85,14 +96,14 @@ Graphical::~Graphical()
 }
 
 void Graphical::initRules() {
-    this->_helpMenu.setSize(sf::Vector2f(500, 1080));
-    this->_helpMenu.setPosition(sf::Vector2f((1920 / 2), 0));
+    this->_helpMenu.setSize(sf::Vector2f(400, 1080));
+    this->_helpMenu.setPosition(sf::Vector2f(200, 0));
     this->_helpMenu.setFillColor(sf::Color(220, 220, 220, 255));
 
     this->_helpMenuText.setFont(this->_font);
     this->_helpMenuText.setCharacterSize(20);
     this->_helpMenuText.setFillColor(sf::Color::Black);
-    this->_helpMenuText.setPosition(sf::Vector2f((1920 / 2) + 10, 10));
+    this->_helpMenuText.setPosition(sf::Vector2f(200 + 10, 10));
 
     std::ifstream rulesFile("keyWord.txt");
     if (rulesFile.is_open()) {
@@ -126,7 +137,57 @@ void Graphical::initRules() {
     } else {
         std::cerr << "Unable to open rules file!" << std::endl;
     }
+    float contentHeight = this->_rules.size() * 20.0f;
+    float viewHeight = this->_scrollView.getSize().y;
+    float cursorHeight = (viewHeight / contentHeight) * viewHeight;
+    if (cursorHeight < 20) cursorHeight = 20;
+        this->_scrollBarCursor.setSize(sf::Vector2f(20, cursorHeight));
 }
+
+void Graphical::handleScrollEvent(sf::Event event)
+{
+    if (event.type == sf::Event::MouseButtonPressed) {
+        if (event.mouseButton.button == sf::Mouse::Left && 
+            this->_scrollBar.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+            _isScrolling = true;
+            _initialMouseY = event.mouseButton.y;
+            _initialScrollPosition = this->_scrollBarCursor.getPosition().y;
+        }
+    } else if (event.type == sf::Event::MouseButtonReleased) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+            _isScrolling = false;
+        }
+    } else if (event.type == sf::Event::MouseMoved) {
+        if (_isScrolling) {
+            float deltaY = event.mouseMove.y - _initialMouseY;
+            float newPosition = _initialScrollPosition + deltaY;
+            float maxScroll = 1080 - this->_scrollBarCursor.getSize().y;
+            if (newPosition < 0) newPosition = 0;
+            if (newPosition > maxScroll) newPosition = maxScroll;
+
+            this->_scrollBarCursor.setPosition(this->_scrollBarCursor.getPosition().x, newPosition);
+            float scrollAmount = (newPosition / maxScroll) * (this->_rules.size() * 20.0f - 1080);
+            this->_scrollView.setCenter(this->_scrollView.getCenter().x, scrollAmount + 540);
+        }
+    }
+}
+
+void Graphical::handleMouseClickEvent(const sf::Event &event)
+{
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+        sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+
+        for (const auto& rule : _rules) {
+            if (rule.first.getGlobalBounds().contains(mousePos)) {
+                std::cout << "Clicked on: " << rule.first.getString().toAnsiString() << std::endl;
+                //std::cout << "Corresponding text: " << rule.second.getString().toAnsiString() << std::endl;
+                _current = rule.second;
+                break;
+            }
+        }
+    }
+}
+
 
 void Graphical::addButton(float x, float y, float width, float height, int scene, std::string text, std::function<std::string()> callback, std::string buttonText, sf::Color color)
 {
@@ -242,15 +303,29 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
             }
         }
     }
+
     if (scene == 3) {
         this->_window->draw(this->_helpMenu);
         float menuY = 10.0f;
+        this->_window->setView(this->_scrollView);
         for (auto &rule : this->_rules) {
-            rule.first.setPosition(sf::Vector2f((1920 / 2) + 10, menuY));
+            rule.first.setPosition(sf::Vector2f(200 + 10, menuY - this->_scrollView.getCenter().y + 540));
             this->_window->draw(rule.first);
             menuY += 20;
         }
+        this->_window->setView(this->_window->getDefaultView());
+        this->_window->draw(this->_scrollBar);
+        this->_window->draw(this->_scrollBarCursor);
+
+        if (!_current.getString().isEmpty()) {
+            this->_current.setFont(this->_font);
+            this->_current.setCharacterSize(20);
+            this->_current.setFillColor(sf::Color::White);
+            this->_current.setPosition(sf::Vector2f(600, 0));
+            this->_window->draw(_current);
+        }
     }
+
     for (auto &button : this->_buttons) {
         if (scene == button->getScene()) {
             if (button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen)
@@ -304,6 +379,15 @@ void Graphical::manageButtonCallback(int scene, std::string &deckPath)
             text->setFillColor(sf::Color(255, 0, 0));
         else
             text->setFillColor(sf::Color(255, 255, 255));
+    }
+
+    if (scene == 3) {
+        //if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        //    sf::Vector2i mouse = sf::Mouse::getPosition(*this->_window);
+        //    if (mouse.x >= (1920 / 2) && mouse.x <= ((1920 / 2) + 500) && mouse.y >= 0 && mouse.y <= 1080) {
+        //        
+        //    }
+        //}
     }
 }
 
