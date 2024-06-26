@@ -222,7 +222,6 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
             }
         }
         if (this->_cardEnlarged) {
-            std::cerr << "Enlarged that will be traited card is: " << this->_activeCard << std::endl;
             this->_window->draw(_checkbox1);
             this->_window->draw(_checkbox2);
             this->_window->draw(this->_infoView2);
@@ -258,6 +257,8 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
                 continue;
             if (button->getButtonText().getString() == "Add to battlefield" && !this->_infoViewIsOpen)
                 continue;
+            if (button->getButtonText().getString() == "Help" && this->_infoViewIsOpen)
+                continue;
             this->_window->draw(button->getButton());
             this->_window->draw(button->getButtonText());
         }
@@ -283,7 +284,7 @@ void Graphical::manageButtonCallback(int scene, std::string &deckPath)
 {
     for (auto &button : this->_buttons) {
         if (button->getButton().getGlobalBounds().contains(sf::Mouse::getPosition(*this->_window).x, sf::Mouse::getPosition(*this->_window).y)) {
-            if ((button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen) || (button->getButtonText().getString() == "Add to battlefield" && !this->_infoViewIsOpen))
+            if ((button->getButtonText().getString() == "Parameter" && this->_infoViewIsOpen) || (button->getButtonText().getString() == "Help" && this->_infoViewIsOpen) || (button->getButtonText().getString() == "Add to battlefield" && !this->_infoViewIsOpen))
                 continue;
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 button->setButtonColor(sf::Color(10, 255, 10));
@@ -368,6 +369,17 @@ std::string Graphical::addCardToBoard(std::string cardName)
 
 void Graphical::dragDropCard(sf::Event event)
 {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        for (auto &card : this->_rectangles) {
+            auto &rectangle = std::get<0>(card);
+            if (rectangle->getGlobalBounds().contains(float(sf::Mouse::getPosition(*this->getWindow()).x), float(sf::Mouse::getPosition(*this->getWindow()).y))) {
+                this->_dragDrop = true;
+                this->_activeCard = std::get<2>(card);
+                break;
+            }
+        }
+    }
+
     if (this->_dragDrop) {
         if (event.type == sf::Event::MouseButtonPressed) {
             this->_dragDrop = false;
@@ -488,7 +500,6 @@ void Graphical::clickCardOnBoard(sf::Event event)
                         rectangle->setPosition(float(1920 / 2), float(1080 / 2));
                         this->_cardEnlarged = true;
                         this->_activeCard = std::get<2>(card);
-                        std::cerr << "Active card is: " << this->_activeCard << std::endl;
                         this->moveCardToBack(this->_activeCard);
                         this->enableCardInfos(this->_activeCard);
                     }
