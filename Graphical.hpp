@@ -43,6 +43,8 @@ class Graphical {
         void enableCardInfos(std::string cardName);
         std::string getActiveCard() { return this->_activeCard; }
         void changeStats(sf::Event event, ACard *card);
+        void duplicateCard(std::vector<std::unique_ptr<ACard>> &deck, ACard *cards);
+        bool getEnlarged() { return this->_cardEnlarged; }
 
         //new
         void initRules();
@@ -76,6 +78,7 @@ class Graphical {
         bool _isEditingPowerText = false;
         bool _isEditingToughnessText = false;
         std::string _powerTextBuffer = "";
+        int tokens = 0;
 
         //new
         sf::RectangleShape _helpMenu;

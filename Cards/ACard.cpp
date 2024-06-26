@@ -15,7 +15,7 @@ ACard::ACard(std::string name, std::string manaCost, std::string cardtype, std::
     this->_text = text;
     this->_texturePath = url;
     this->_powerToughness = powerToughness;
-
+    this->_manaCostString = manaCost;
     this->_cardTypeString = cardtype;
 }
 
@@ -62,6 +62,11 @@ void ACard::setPower(int power)
 void ACard::setToughness(int toughness)
 {
     this->_powerToughness.second = toughness;
+}
+
+std::string ACard::getOriginalManaCost()
+{
+    return this->_manaCostString;
 }
 
 std::unordered_map<ManaType, int> ACard::setManaCost(std::string cost)

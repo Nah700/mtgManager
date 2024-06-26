@@ -156,7 +156,7 @@ void Graphical::addCard(std::string name, std::string texturePath)
     std::unique_ptr<sf::RectangleShape> rectangle = std::make_unique<sf::RectangleShape>();
     rectangle->setTexture(loadTextureFromUrl(texturePath, name + ".png"));
     rectangle->setSize(sf::Vector2f(200, 300));
-    rectangle->setPosition(100, 100);
+    rectangle->setPosition(-400, -400);
     rectangle->setOrigin(rectangle->getSize().x / 2, rectangle->getSize().y / 2);
     this->_rectangles.push_back(std::make_tuple(std::move(rectangle), false, name));
 }
@@ -222,6 +222,7 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
             }
         }
         if (this->_cardEnlarged) {
+            std::cerr << "Enlarged that will be traited card is: " << this->_activeCard << std::endl;
             this->_window->draw(_checkbox1);
             this->_window->draw(_checkbox2);
             this->_window->draw(this->_infoView2);
@@ -407,9 +408,46 @@ void Graphical::enableCardInfos(std::string cardName)
     }
 }
 
+
+void Graphical::duplicateCard(std::vector<std::unique_ptr<ACard>> &deck, ACard *cards)
+{
+        for (auto &card : this->_rectangles) {
+            if (std::get<2>(card) == this->_activeCard) {
+                std::tuple<std::unique_ptr<sf::RectangleShape>, bool, std::string> newCard = std::make_tuple(std::make_unique<sf::RectangleShape>(), true, "token" + std::to_string(this->tokens));
+                this->tokens++;
+                std::get<0>(newCard)->setTexture(std::get<0>(card)->getTexture());
+                std::get<0>(newCard)->setSize(sf::Vector2f(200, 300));
+                std::get<0>(newCard)->setPosition(std::get<0>(card)->getPosition().x + 100 , std::get<0>(card)->getPosition().y + 100);
+                std::get<0>(newCard)->setOrigin(std::get<0>(card)->getSize().x / 2, std::get<0>(card)->getSize().y / 2);
+                this->_rectangles.push_back(std::move(newCard));
+                deck.push_back(std::make_unique<ACard>(std::get<2>(newCard), cards->getOriginalManaCost(), cards->getCardTypeStringed(), cards->getCardText(), cards->getTexturePath(), std::make_pair(cards->getPower(), cards->getToughness())));
+                break;
+            }
+        }
+}
+
 void Graphical::clickCardOnBoard(sf::Event event)
 {
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Delete) && this->_cardEnlarged) {
+        for (auto &card : this->_rectangles) {
+            if (this->_activeCard == std::get<2>(card)) {
+                if (std::get<2>(card).find("token") != std::string::npos) {
+                    this->_rectangles.erase(std::remove(this->_rectangles.begin(), this->_rectangles.end(), card), this->_rectangles.end());
+                } else {
+                    std::get<0>(card)->setPosition(1920, 1080);
+                    std::get<0>(card)->setSize(sf::Vector2f(200, 300));
+                    this->setVisibleCard(std::get<2>(card), false);
+                }
+                this->_cardEnlarged = false;
+                this->_activeCard = "";
+                this->_cardInfos.clear();
+                return;
+            }
+        }
+    }
     if (event.type == sf::Event::MouseButtonPressed) {
+
         if (event.mouseButton.button == sf::Mouse::Right) {
             for (auto &card : this->_rectangles) {
                 if (std::get<1>(card) && std::get<0>(card)->getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
@@ -450,6 +488,7 @@ void Graphical::clickCardOnBoard(sf::Event event)
                         rectangle->setPosition(float(1920 / 2), float(1080 / 2));
                         this->_cardEnlarged = true;
                         this->_activeCard = std::get<2>(card);
+                        std::cerr << "Active card is: " << this->_activeCard << std::endl;
                         this->moveCardToBack(this->_activeCard);
                         this->enableCardInfos(this->_activeCard);
                     }

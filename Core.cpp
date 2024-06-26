@@ -222,6 +222,9 @@ void Core::run()
                 this->_graphicPart->getWindow()->close();
             this->manageSearchBar(event);
             this->_graphicPart->dragDropCard(event);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && this->_graphicPart->getEnlarged()) {
+                this->_graphicPart->duplicateCard(this->_cards, this->getCardByName(this->_graphicPart->getActiveCard()));
+            }
             this->_graphicPart->clickCardOnBoard(event);
             if (this->_graphicPart->getActiveCard() != "")
                 this->_graphicPart->changeStats(event, this->getCardByName(this->_graphicPart->getActiveCard()));
