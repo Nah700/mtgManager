@@ -198,7 +198,7 @@ std::string Graphical::toggleInfo()
     return "";
 }
 
-void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &card)
+void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &cardo)
 {
     this->_window->clear();
     this->_window->draw(this->_background);
@@ -217,8 +217,9 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
             this->_window->draw(*this->_dropdownMenu[i]);
         }
         for (auto &card : this->_rectangles) {
-            if (std::get<1>(card))
+            if (std::get<1>(card)) {
                 this->_window->draw(*std::get<0>(card));
+            }
         }
         if (this->_cardEnlarged) {
             this->_window->draw(_checkbox1);
@@ -226,14 +227,14 @@ void Graphical::displayWindowContent(int scene, std::string &deckPath, ACard &ca
             this->_window->draw(this->_infoView2);
             if (this->_cardInfos[1].getString().getSize() < 7) {
                 this->_cardInfos[0].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 290));
-                this->_cardInfos[2].setString(this->_cardInfos[2].getString() + " " + card.getCardTypeStringed());
+                this->_cardInfos[2].setString(this->_cardInfos[2].getString() + " " + cardo.getCardTypeStringed());
                 this->_cardInfos[2].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 270));
-                this->_cardInfos[3].setString(std::to_string(card.getPower()));
+                this->_cardInfos[3].setString(std::to_string(cardo.getPower()));
                 this->_cardInfos[3].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 250));
                 this->_cardInfos[4].setPosition(float((1920 / 2) + 230), float((1080 / 2) - 250));
-                this->_cardInfos[5].setString(std::to_string(card.getToughness()));
+                this->_cardInfos[5].setString(std::to_string(cardo.getToughness()));
                 this->_cardInfos[5].setPosition(float((1920 / 2) + 250), float((1080 / 2) - 250));
-                this->_cardInfos[1].setString(this->_cardInfos[1].getString() + card.getCardText());
+                this->_cardInfos[1].setString(this->_cardInfos[1].getString() + cardo.getCardText());
                 this->_cardInfos[1].setPosition(float((1920 / 2) + 210), float((1080 / 2) - 230));
             }
             for (int i = 0; i < this->_cardInfos.size(); i++) {
@@ -380,12 +381,12 @@ void Graphical::dragDropCard(sf::Event event)
     }
 }
 
-void Graphical::moveCardToBack(std::string cardName)
-{
-    for (auto card = this->_rectangles.begin(); card != this->_rectangles.end(); card++) {
+void Graphical::moveCardToBack(std::string cardName) {
+    for (auto card = this->_rectangles.begin(); card != this->_rectangles.end(); ++card) {
         if (std::get<2>(*card) == cardName) {
-            this->_rectangles.push_back(std::move(*card));
+            auto cardCopy = std::move(*card);
             this->_rectangles.erase(card);
+            this->_rectangles.push_back(std::move(cardCopy));
             break;
         }
     }
@@ -446,7 +447,7 @@ void Graphical::clickCardOnBoard(sf::Event event)
                         this->_originalCardSize = rectangle->getSize();
                         rectangle->setSize(sf::Vector2f(400, 600));
                         rectangle->setOrigin(rectangle->getSize().x / 2, rectangle->getSize().y / 2);
-                        rectangle->setPosition(1920 / 2, 1080 / 2);
+                        rectangle->setPosition(float(1920 / 2), float(1080 / 2));
                         this->_cardEnlarged = true;
                         this->_activeCard = std::get<2>(card);
                         this->moveCardToBack(this->_activeCard);
@@ -494,4 +495,49 @@ void Graphical::clickCardOnBoard(sf::Event event)
             }
         }
     }
+}
+
+void Graphical::changeStats(sf::Event event, ACard *card)
+{
+    if (!this->_cardEnlarged)
+        return;
+    if (!this->_isEditingPowerText && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P) {
+        this->_isEditingPowerText = true;
+        this->_powerTextBuffer = std::to_string(card->getPower());
+    }
+    if (!this->_isEditingToughnessText && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::T) {
+        this->_isEditingToughnessText = true;
+        this->_powerTextBuffer = std::to_string(card->getToughness());
+    }
+    if (this->_isEditingPowerText && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+        this->_isEditingPowerText = false;
+        if (card != nullptr) {
+            card->setPower(std::stoi(_powerTextBuffer));
+        }
+    }
+    if (this->_isEditingToughnessText && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+        this->_isEditingToughnessText = false;
+        if (card != nullptr) {
+            card->setToughness(std::stoi(_powerTextBuffer));
+        }
+    }
+    if ((this->_isEditingPowerText || this->_isEditingToughnessText) && event.type == sf::Event::TextEntered) {
+        if (event.text.unicode == '\b' && !_powerTextBuffer.empty()) {
+            _powerTextBuffer.pop_back();
+        } else if (event.text.unicode < 128 && event.text.unicode >= 48 && event.text.unicode <= 57) {
+            _powerTextBuffer += static_cast<char>(event.text.unicode);
+        }
+        if (this->_isEditingPowerText)
+            this->_cardInfos[3].setString(_powerTextBuffer);
+        if (this->_isEditingToughnessText)
+            this->_cardInfos[5].setString(_powerTextBuffer);
+    } else {
+        this->_cardInfos[3].setFillColor(sf::Color::White);
+        this->_cardInfos[5].setFillColor(sf::Color::White);
+
+    }
+    if (this->_isEditingPowerText)
+        this->_cardInfos[3].setFillColor(sf::Color::Red);
+    if (this->_isEditingToughnessText)
+        this->_cardInfos[5].setFillColor(sf::Color::Red);
 }

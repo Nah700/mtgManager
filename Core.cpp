@@ -223,6 +223,8 @@ void Core::run()
             this->manageSearchBar(event);
             this->_graphicPart->dragDropCard(event);
             this->_graphicPart->clickCardOnBoard(event);
+            if (this->_graphicPart->getActiveCard() != "")
+                this->_graphicPart->changeStats(event, this->getCardByName(this->_graphicPart->getActiveCard()));
         }
         this->_sceneFunctions[this->_scene]();
         this->_graphicPart->manageButtonCallback(this->_scene, this->_deckPath);

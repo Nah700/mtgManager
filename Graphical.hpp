@@ -42,6 +42,7 @@ class Graphical {
         void moveCardToBack(std::string cardName);
         void enableCardInfos(std::string cardName);
         std::string getActiveCard() { return this->_activeCard; }
+        void changeStats(sf::Event event, ACard *card);
 
         //new
         void initRules();
@@ -72,6 +73,9 @@ class Graphical {
         sf::Vector2f _originalCardSize;
         sf::RectangleShape _checkbox1, _checkbox2;
         bool _checkbox1Checked = false, _checkbox2Checked = false;
+        bool _isEditingPowerText = false;
+        bool _isEditingToughnessText = false;
+        std::string _powerTextBuffer = "";
 
         //new
         sf::RectangleShape _helpMenu;

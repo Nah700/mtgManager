@@ -54,6 +54,16 @@ int ACard::getToughness()
     return this->_powerToughness.second;
 }
 
+void ACard::setPower(int power)
+{
+    this->_powerToughness.first = power;
+}
+
+void ACard::setToughness(int toughness)
+{
+    this->_powerToughness.second = toughness;
+}
+
 std::unordered_map<ManaType, int> ACard::setManaCost(std::string cost)
 {
     std::unordered_map<ManaType, int> manaCostMap = {

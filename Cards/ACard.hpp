@@ -23,6 +23,8 @@ class ACard : public ICard {
         std::string getTexturePath();
         int getPower();
         int getToughness();
+        void setPower(int power);
+        void setToughness(int toughness);
 
         std::unordered_map<ManaType, int> setManaCost(std::string cost);
         std::vector<CardType> setCardType(std::string type);
